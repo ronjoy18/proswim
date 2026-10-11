@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .rule-tracker {
+    list-style: none;
+    padding-left: 0.25rem;
+    margin: 0.5rem 0 0.75rem 0;
+    font-size: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .rule-tracker li.invalid {
+    color: #94A3B8;
+  }
+  .rule-tracker li.invalid::before {
+    content: "✕ ";
+    color: #EF4444;
+    font-weight: bold;
+  }
+  .rule-tracker li.valid {
+    color: #166534;
+    font-weight: 600;
+  }
+  .rule-tracker li.valid::before {
+    content: "✓ ";
+    color: #16A34A;
+    font-weight: bold;
+  }
+</style>
+
+<div style="max-width: 480px; margin: 0 auto; background: #dedce4; border: 1px solid var(--border-slate); border-radius: 8px; padding: 2rem;">
+  
+  <div style="display: flex; border-bottom: 1px solid var(--border-slate); margin-bottom: 1.5rem;">
+    <button id="tab-login" class="clinical-btn" style="flex: 1; border-radius: 0; border-bottom: 2px solid var(--primary-deep);" onclick="toggleAuthMode('login')">Sign In</button>
+    <button id="tab-register" class="clinical-btn" style="flex: 1; border-radius: 0;" onclick="toggleAuthMode('register')">Register Account</button>
+  </div>
+
+  <div id="form-feedback" style="display: none; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.85rem;"></div>
+
+  <!-- Sign In Form -->
+  <form id="login-form">
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Account Handle / Username</label>
+      <input type="text" name="username" required style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+    </div>
+    <div style="margin-bottom: 1.5rem;">
+      <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Password</label>
+      <input type="password" name="password" required style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+    </div>
+    <input type="hidden" name="portal" value="public">
+    <button type="submit" class="clinical-btn btn-primary" style="width: 100%;">Verify & Sign In</button>
+  </form>
+
+  <!-- Dynamic Registration Form -->
+  <form id="registration-form" style="display: none;">
+    <div style="margin-bottom: 0.75rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Identity Role</label>
+      <select name="role" id="reg-role" style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 4px;" onchange="handleRoleFieldToggles(this.value)">
+        <option value="CLIENT">Client</option>
+        <option value="COACH">Proswim Coach</option>
+      </select>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem;">
+      <div>
+        <label style="display: block; font-weight: 600; font-size: 0.85rem;">First Name</label>
+        <input type="text" name="first_name" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 600; font-size: 0.85rem;">Last Name</label>
+        <input type="text" name="last_name" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      </div>
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Username</label>
+      <input type="text" name="username" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Email Address</label>
+      <input type="email" name="email" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+    </div>
+
+    <div id="coach-spec-fields" style="display: none; margin-bottom: 0.75rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Coach Number / License</label>
+      <input type="text" name="license_number" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+    </div>
+
+    <div id="client-referral-fields" style="margin-bottom: 0.75rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Referral Code (Optional)</label>
+      <input type="text" name="referral_code" placeholder="Referral Code" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px; margin-bottom: 0.25rem;">
+    </div>
+
+    <div style="margin-bottom: 0.75rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Password</label>
+      <input type="password" name="password" id="auth-password" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;" autocomplete="new-password">
+      
+      <ul class="rule-tracker">
+        <li id="rule-len" class="invalid">Minimum 8 characters</li>
+        <li id="rule-up" class="invalid">Uppercase character</li>
+        <li id="rule-low" class="invalid">Lowercase character</li>
+        <li id="rule-num" class="invalid">Numeric digit</li>
+        <li id="rule-spc" class="invalid">Special character (!@#$%^&*)</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Confirm Password</label>
+      <input type="password" name="password_confirmation" id="auth-password-confirm" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;" autocomplete="new-password">
+    </div>
+
+    <button type="submit" class="clinical-btn btn-teal" style="width: 100%;">Create Account</button>
+  </form>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue || "{{ csrf_token }}";
+  }
+
+  function toggleAuthMode(mode) {
+    const loginForm = document.getElementById("login-form");
+    const regForm = document.getElementById("registration-form");
+    const tabLogin = document.getElementById("tab-login");
+    const tabReg = document.getElementById("tab-register");
+    const feedback = document.getElementById("form-feedback");
+    if (feedback) feedback.style.display = "none";
+
+    if (mode === "login") {
+      if (loginForm) loginForm.style.display = "block";
+      if (regForm) regForm.style.display = "none";
+      if (tabLogin) tabLogin.style.borderBottom = "2px solid var(--primary-deep)";
+      if (tabReg) tabReg.style.borderBottom = "none";
+    } else {
+      if (loginForm) loginForm.style.display = "none";
+      if (regForm) regForm.style.display = "block";
+      if (tabReg) tabReg.style.borderBottom = "2px solid var(--primary-deep)";
+      if (tabLogin) tabLogin.style.borderBottom = "none";
+    }
+  }
+
+  function handleRoleFieldToggles(role) {
+    const coachFields = document.getElementById("coach-spec-fields");
+    const clientFields = document.getElementById("client-referral-fields");
+    if (coachFields) coachFields.style.display = (role === "COACH") ? "block" : "none";
+    if (clientFields) clientFields.style.display = (role === "CLIENT") ? "block" : "none";
+  }
+
+  function toggleRule(el, isValid) {
+    if (!el) return;
+    if (isValid) {
+      el.classList.remove("invalid");
+      el.classList.add("valid");
+    } else {
+      el.classList.remove("valid");
+      el.classList.add("invalid");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Initial Mode Query Param
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("mode") === "register") toggleAuthMode("register");
+    if (params.get("role") === "coach") {
+      const regRole = document.getElementById("reg-role");
+      if (regRole) regRole.value = "COACH";
+      handleRoleFieldToggles("COACH");
+    }
+    if (params.get("role") === "client") {
+      const regRole = document.getElementById("reg-role");
+      if (regRole) regRole.value = "CLIENT";
+      handleRoleFieldToggles("CLIENT");
+    }
+
+    // 2. Real-time Password Validation Tracker
+    const pwdInput = document.getElementById("auth-password");
+    if (pwdInput) {
+      const ruleLen = document.getElementById("rule-len");
+      const ruleUp = document.getElementById("rule-up");
+      const ruleLow = document.getElementById("rule-low");
+      const ruleNum = document.getElementById("rule-num");
+      const ruleSpc = document.getElementById("rule-spc");
+
+      pwdInput.addEventListener("input", () => {
+        const val = pwdInput.value;
+        toggleRule(ruleLen, val.length >= 8);
+        toggleRule(ruleUp, /[A-Z]/.test(val));
+        toggleRule(ruleLow, /[a-z]/.test(val));
+        toggleRule(ruleNum, /[0-9]/.test(val));
+        toggleRule(ruleSpc, /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val));
+      });
+    }
+
+    // 3. Login Submission Handler
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const payload = Object.fromEntries(new FormData(loginForm).entries());
+
+        try {
+          const res = await fetch("/api/v1/auth/login/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (res.ok) {
+            window.location.href = "/dashboard/";
+          } else {
+            const err = await res.json();
+            const fb = document.getElementById("form-feedback");
+            if (fb) {
+              fb.textContent = err.detail || "Authentication sequence failed.";
+              fb.style.backgroundColor = "#FEE2E2";
+              fb.style.color = "var(--alert-red)";
+              fb.style.display = "block";
+            }
+          }
+        } catch (err) {
+          alert("Could not connect to authentication gateway.");
+        }
+      });
+    }
+
+    // 4. Registration Submission Handler
+    const regForm = document.getElementById("registration-form");
+    if (regForm) {
+      regForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const payload = Object.fromEntries(new FormData(regForm).entries());
+
+        if (payload.password !== payload.password_confirmation) {
+          const fb = document.getElementById("form-feedback");
+          if (fb) {
+            fb.textContent = "Passwords do not match.";
+            fb.style.backgroundColor = "#FEE2E2";
+            fb.style.color = "var(--alert-red)";
+            fb.style.display = "block";
+          }
+          return;
+        }
+
+        try {
+  const res = await fetch("/api/v1/auth/register/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCookie("csrftoken")
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const fb = document.getElementById("form-feedback");
+
+  if (res.ok) {
+    alert("Account registered successfully! Please sign in.");
+    toggleAuthMode("login");
+  } else {
+    let errorDetail = "Registration failed.";
+    try {
+      const err = await res.json();
+      errorDetail = Object.entries(err)
+        .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
+        .join(" | ");
+    } catch {
+      errorDetail = `Server error (${res.status}). Check backend terminal traceback.`;
+    }
+
+    if (fb) {
+      fb.textContent = errorDetail;
+      fb.style.backgroundColor = "#FEE2E2";
+      fb.style.color = "var(--alert-red)";
+      fb.style.display = "block";
+    }
+  }
+} catch (err) {
+  alert("Could not communicate with the server: " + err.message);
+}
+      });
+    }
+  });
+</script>
+{% endblock %}

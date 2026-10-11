@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto; text-align: center; padding: 2rem 0;">
+  <span style="font-weight: 700; color: var(--secondary-teal); text-transform: uppercase; font-size: 0.8rem;">Future Deployment Horizon</span>
+  <h1 style="color: var(--primary-deep); margin: 0.5rem 0 1rem 0;">Global coach Discovery & Practice Network</h1>
+  <p style="color: #64748B; line-height: 1.6; margin-bottom: 2rem;">
+    Our upcoming phase introduces cross-border clinical discovery. Clients can browse verified 
+    coach credentials, compare specialization ratings, and request remote consultations directly.
+  </p>
+
+  <div class="card-grid" style="text-align: left;">
+    <div class="card">
+      <div>
+        <h3 style="color: var(--primary-deep);">Dr. Sarah Jenkins, MD</h3>
+        <p style="color: var(--secondary-teal); font-weight: 600; font-size: 0.85rem;">Molecular Diagnostics & Immunology</p>
+        <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.5rem;">Affiliation: St. Jude Research Hospital</p>
+      </div>
+      <div style="margin-top: 1rem;">
+        <button class="clinical-btn btn-outline" style="width: 100%; cursor: not-allowed;" disabled>Connect via LabCare (Phase II)</button>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div>
+        <h3 style="color: var(--primary-deep);">Dr. Marcus Vance, FACP</h3>
+        <p style="color: var(--secondary-teal); font-weight: 600; font-size: 0.85rem;">Clinical Pathology & Oncology Diagnostics</p>
+        <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.5rem;">Affiliation: Cambridge Medical Labs</p>
+      </div>
+      <div style="margin-top: 1rem;">
+        <button class="clinical-btn btn-outline" style="width: 100%; cursor: not-allowed;" disabled>Connect via LabCare (Phase II)</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

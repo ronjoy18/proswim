@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- 5-Second Toast Container -->
+<div id="coach-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
+  <span style="font-size: 1.25rem;">✓</span>
+  <div>
+    <strong id="toast-title">Success</strong>
+    <p id="toast-message" style="font-size: 0.85rem; margin: 0; color: #047857;"></p>
+  </div>
+</div>
+
+<!-- Header -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <div>
+    <h1 style="color: var(--primary-deep); margin-bottom: 0.25rem;">Proswim Coach Profile</h1>
+    <p style="color: #64748B;">Assigned clients and performance evaluations.</p>
+  </div>
+</div>
+
+<!-- Section 1: Client Monitoring Roster -->
+<div class="card" style="margin-bottom: 2rem;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
+    <div>
+      <h3 style="color: var(--primary-deep);">👥 Monitored Practicing Clients</h3>
+      <p style="font-size: 0.85rem; color: #64748B;">Enrolled clients appear here immediately upon registration.</p>
+    </div>
+    <span id="client-count-badge" style="background: #E0F2FE; color: var(--primary-deep); padding: 4px 10px; border-radius: 9999px; font-weight: 700; font-size: 0.8rem;">
+      0 Clients
+    </span>
+  </div>
+
+  <table class="data-table" id="clients-roster-table">
+    <thead>
+      <tr>
+        <th>Client Name</th>
+        <th>Contact Info</th>
+        <th>Enrolled</th>
+        <th>Total Lessons</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="5">Loading client roster...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 2: Student Performance Report Card -->
+<div class="card" style="margin-bottom: 2rem;">
+  <div style="border-bottom: 1px solid var(--border-slate); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+    <h3 style="color: var(--primary-deep); margin: 0;">📝 File Student Performance Report</h3>
+    <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">
+      Submit evaluations visible exclusively to the target student on their dashboard.
+    </p>
+  </div>
+
+  <!-- Single Valid Form -->
+  <form id="coach-report-form">
+    <!-- 1. Select the specific enrolled student -->
+    <div style="margin-bottom: 0.85rem;">
+      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary-deep); margin-bottom: 0.35rem;">
+        Target Student *
+      </label>
+      <select id="report-client-select" name="client" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 4px; background: #F8FAFC;">
+        <option value="">-- Choose Enrolled Student --</option>
+      </select>
+    </div>
+
+    <!-- 2. Performance score (1 to 10) -->
+    <div style="margin-bottom: 0.85rem;">
+      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary-deep); margin-bottom: 0.35rem;">
+        Water Safety & Performance Score (1 - 10) *
+      </label>
+      <input type="number" id="report-score" name="performance_score" min="1" max="10" value="8" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+    </div>
+
+    <!-- 3. Coach Remarks -->
+    <div style="margin-bottom: 1.25rem;">
+      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary-deep); margin-bottom: 0.35rem;">
+        Coach Assessment Remarks *
+      </label>
+      <textarea id="report-remarks" name="coach_remarks" rows="3" required placeholder="Detail swimming progress, stroke technique, breath control, or points of improvement..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 4px; font-family: inherit;"></textarea>
+    </div>
+
+    <button id="send-report-btn" type="submit" class="clinical-btn btn-teal" style="width: 100%;">
+      Publish Report to Student
+    </button>
+  </form>
+</div>
+
+<!-- Section 3: Dispatched Orders Tracker -->
+<!-- Section 3: Assigned Schedule & Dispatched Bookings -->
+<div class="card">
+  <div style="margin-bottom: 1rem;">
+    <h3 style="color: var(--primary-deep); margin: 0;">🏊 My Assigned Training Sessions</h3>
+    <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live feed of clients auto-routed into your calendar.</p>
+  </div>
+
+  <table class="data-table" id="orders-table">
+    <thead>
+      <tr>
+        <th>Schedule ID</th>
+        <th>Client / Student</th>
+        <th>Activity</th>
+        <th>Session Window</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="5">Loading assigned calendar...</td></tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue || "{{ csrf_token }}";
+  }
+
+  function showCoachToast(title, message) {
+    const toast = document.getElementById("coach-toast-notification");
+    if (!toast) return;
+    const titleEl = document.getElementById("toast-title");
+    const msgEl = document.getElementById("toast-message");
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.textContent = message;
+    toast.style.display = "flex";
+    setTimeout(() => { toast.style.display = "none"; }, 5000);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Initial Data Fetch
+    loadClientsRoster();
+    loadCoachOrders();
+
+    // 2. Report Form Submission Handler
+    const reportForm = document.getElementById("coach-report-form");
+    const reportBtn = document.getElementById("send-report-btn");
+
+    if (reportForm) {
+      reportForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const clientId = document.getElementById("report-client-select").value;
+        const score = document.getElementById("report-score").value;
+        const remarks = document.getElementById("report-remarks").value.trim();
+
+        if (!clientId) {
+          alert("Please select a student from the dropdown.");
+          return;
+        }
+
+        if (reportBtn) {
+          reportBtn.disabled = true;
+          reportBtn.textContent = "Publishing Evaluation...";
+        }
+
+        try {
+          const res = await fetch("/api/v1/coach/reports/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: JSON.stringify({
+              client: clientId,
+              performance_score: parseInt(score),
+              coach_remarks: remarks
+            })
+          });
+
+          if (res.ok) {
+            showCoachToast("Report Published!", "Evaluation saved and transmitted to student dashboard.");
+            reportForm.reset();
+          } else {
+            const err = await res.json();
+            alert("Submission error: " + (err.detail || JSON.stringify(err)));
+          }
+        } catch (err) {
+          alert("Network failure publishing performance report.");
+        } finally {
+          if (reportBtn) {
+            reportBtn.disabled = false;
+            reportBtn.textContent = "Publish Report to Student";
+          }
+        }
+      });
+    }
+  });
+
+  // Load clients and fill dropdowns
+  async function loadClientsRoster() {
+    try {
+      const res = await fetch("/api/v1/coach/my-clients/");
+      if (!res.ok) return;
+
+      const clients = await res.json();
+      const reportSelect = document.getElementById("report-client-select");
+      const tbody = document.querySelector("#clients-roster-table tbody");
+      const badge = document.getElementById("client-count-badge");
+
+      if (badge) badge.textContent = `${clients.length} Client${clients.length === 1 ? '' : 's'}`;
+      if (reportSelect) reportSelect.innerHTML = '<option value="">-- Choose Enrolled Student --</option>';
+      if (tbody) tbody.innerHTML = "";
+
+      if (clients.length === 0 && tbody) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #64748B;">No clients enrolled.</td></tr>';
+        return;
+      }
+
+      clients.forEach(c => {
+        if (reportSelect) {
+          const opt = document.createElement("option");
+          opt.value = c.id;
+          opt.textContent = `${c.full_name} (@${c.username})`;
+          reportSelect.appendChild(opt);
+        }
+
+        if (tbody) {
+          tbody.innerHTML += `
+            <tr>
+              <td><strong>${c.full_name}</strong></td>
+              <td style="font-size: 0.85rem;">📞 ${c.phone}<br>✉️ ${c.email}</td>
+              <td style="font-size: 0.8rem;">${c.registered_on}</td>
+              <td><span style="background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">${c.total_orders} Lessons</span></td>
+              <td>
+                <button type="button" onclick="quickSelectReportStudent('${c.id}')" class="clinical-btn btn-teal" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 4px;">Write Report</button>
+                <button type="button" onclick="unlinkClient('${c.id}', '${c.full_name}')" class="clinical-btn" style="padding: 4px 8px; font-size: 0.75rem; background: #FEE2E2; color: #DC2626;">Unlink</button>
+              </td>
+            </tr>
+          `;
+        }
+      });
+    } catch (e) {
+      console.error("Error loading roster:", e);
+    }
+  }
+
+  function quickSelectReportStudent(clientId) {
+    const select = document.getElementById("report-client-select");
+    if (select) {
+      select.value = clientId;
+      select.scrollIntoView({ behavior: "smooth", block: "center" });
+      select.focus();
+    }
+  }
+
+  async function unlinkClient(id, name) {
+    if (!confirm(`Are you sure you want to remove ${name}?`)) return;
+    try {
+      const res = await fetch(`/api/v1/coach/my-clients/${id}/`, {
+        method: "DELETE",
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+      });
+      if (res.ok) {
+        showCoachToast("Client Removed", `${name} unlinked.`);
+        loadClientsRoster();
+      }
+    } catch(e) {}
+  }
+
+  async function loadCoachOrders() {
+  try {
+    const res = await fetch("/api/v1/schedules/");
+    const tbody = document.querySelector("#orders-table tbody");
+    if (!tbody) return;
+
+    if (!res.ok) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #64748B;">Could not load session calendar.</td></tr>';
+      return;
+    }
+
+    const schedules = await res.json();
+    tbody.innerHTML = "";
+
+    if (schedules.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #64748B;">No upcoming lessons assigned at this time.</td></tr>';
+      return;
+    }
+
+    schedules.forEach(s => {
+      const start = new Date(s.start_time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+      const end = new Date(s.end_time).toLocaleTimeString([], { timeStyle: 'short' });
+
+      tbody.innerHTML += `
+        <tr>
+          <td><code>#${String(s.id).substring(0, 8)}</code></td>
+          <td><strong>${s.client_name || "Enrolled Student"}</strong></td>
+          <td style="font-size: 0.85rem;">${s.activity_name || "Lesson"}</td>
+          <td style="font-size: 0.85rem; color: #0F172A;">
+            📅 ${start} – ${end}
+          </td>
+          <td>
+            <span style="background: #E0F2FE; color: var(--primary-deep); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">
+              ${s.status}
+            </span>
+          </td>
+        </tr>
+      `;
+    });
+  } catch (e) {
+    console.error("Coach schedules load error:", e);
+  }
+}
+</script>
+{% endblock %}

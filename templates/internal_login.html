@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <title>LabCare Diagnostics | Internal Port Management</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body style="background-color: #0F172A; display: flex; align-items: center; justify-content: center;">
+
+  <div style="width: 100%; max-width: 400px; background: #1E293B; border: 1px solid #334155; border-radius: 8px; padding: 2rem; color: #FFF;">
+    <h2 style="color: #38BDF8; margin-bottom: 0.5rem;">Clinical Systems Terminal</h2>
+    <p style="font-size: 0.8rem; color: #94A3B8; margin-bottom: 1.5rem;">Restricted portal for laboratory technicians and administrators.</p>
+
+    <div id="internal-error" style="display: none; padding: 0.5rem; background: #7F1D1D; color: #FECACA; border-radius: 4px; font-size: 0.8rem; margin-bottom: 1rem;"></div>
+
+    <form id="internal-auth-form">
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.8rem; color: #94A3B8; margin-bottom: 0.25rem;">Station Access Identifier</label>
+        <input type="text" name="username" required style="width: 100%; padding: 0.65rem; background: #0F172A; border: 1px solid #334155; color: #FFF; border-radius: 4px;">
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; font-size: 0.8rem; color: #94A3B8; margin-bottom: 0.25rem;">Security Key</label>
+        <input type="password" name="password" required style="width: 100%; padding: 0.65rem; background: #0F172A; border: 1px solid #334155; color: #FFF; border-radius: 4px;">
+      </div>
+      <button type="submit" class="clinical-btn btn-teal" style="width: 100%;">Authorize Console</button>
+    </form>
+  </div>
+
+  <script src="/static/js/auth.js"></script>
+  <script>
+    document.getElementById("internal-auth-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = Object.fromEntries(new FormData(e.target).entries());
+      const res = await fetch("/api/v1/auth/internal-login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        window.location.href = "/secure/management-portal/";
+      } else {
+        const fb = document.getElementById("internal-error");
+        fb.textContent = "Security violation: Invalid or unauthorized administrative credentials.";
+        fb.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
+
