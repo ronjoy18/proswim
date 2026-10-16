@@ -29,21 +29,22 @@
       0 Clients
     </span>
   </div>
-
-  <table class="data-table" id="clients-roster-table">
-    <thead>
-      <tr>
-        <th>Client Name</th>
-        <th>Contact Info</th>
-        <th>Enrolled</th>
-        <th>Total Lessons</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td colspan="5">Loading client roster...</td></tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="data-table" id="clients-roster-table">
+      <thead>
+        <tr>
+          <th>Client Name</th>
+          <th>Contact Info</th>
+          <th>Enrolled</th>
+          <th>Total Lessons</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="5">Loading client roster...</td></tr>
+      </tbody>
+    </table>
+  </div>  
 </div>
 
 <!-- Section 2: Student Performance Report Card -->
@@ -96,21 +97,22 @@
     <h3 style="color: var(--primary-deep); margin: 0;">🏊 My Assigned Training Sessions</h3>
     <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live feed of clients auto-routed into your calendar.</p>
   </div>
-
-  <table class="data-table" id="orders-table">
-    <thead>
-      <tr>
-        <th>Schedule ID</th>
-        <th>Client / Student</th>
-        <th>Activity</th>
-        <th>Session Window</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td colspan="5">Loading assigned calendar...</td></tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="data-table" id="orders-table">
+      <thead>
+        <tr>
+          <th>Schedule ID</th>
+          <th>Client / Student</th>
+          <th>Activity</th>
+          <th>Session Window</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="5">Loading asssigned calendar...</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}
 
