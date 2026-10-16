@@ -40,6 +40,11 @@ body {
   text-decoration: none;
 }
 
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* Adds horizontal scroll ONLY when table exceeds card width */
+  -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling on iOS Safari */
+}
 .clinical-btn {
   padding: 0.65rem 1.25rem;
   border-radius: 6px;
