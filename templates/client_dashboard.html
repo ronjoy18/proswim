@@ -71,19 +71,20 @@
     <h3 style="color: var(--primary-deep); margin: 0;">📅 My Confirmed Lesson Schedules</h3>
     <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live timetable with your automatically assigned coach.</p>
   </div>
-
-  <table class="data-table" id="client-schedules-table">
-    <thead>
-      <tr>
-        <th>Activity</th>
-        <th>Assigned Coach</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Status</th>
-      </tr>
-    </thead>
+  <div class="table-responsive"> 
+    <table class="data-table" id="client-schedules-table">
+      <thead>
+        <tr>
+          <th>Activity</th>
+          <th>Assigned Coach</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Status</th>
+        </tr>
+      </thead>
     <tbody><tr><td colspan="5">Loading confirmed sessions...</td></tr></tbody>
-  </table>
+    </table>
+  </div>  
 </div>
 
 <!-- Active Bookings & Billing Table -->
@@ -92,26 +93,29 @@
     <h3 style="color: var(--primary-deep);">💳 Active Bookings & Payment Status</h3>
     <p style="font-size: 0.85rem; color: #64748B;">All booked sessions appear here. Click "Pay Now" to settle invoices.</p>
   </div>
-  <table class="data-table" id="billing-table">
-    <thead>
-      <tr>
-        <th>Booking Code</th>
-        <th>Requested Activities / Lessons</th>
-        <th>Total Amount</th>
-        <th>Status</th>
-        <th>Payment Action</th>
-      </tr>
-    </thead>
-    <tbody><tr><td colspan="5">Checking booking records...</td></tr></tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="data-table" id="billing-table">
+      <thead>
+        <tr>
+          <th>Booking Code</th>
+          <th>Requested Activities / Lessons</th>
+          <th>Total Amount</th>
+          <th>Status</th>
+          <th>Payment Action</th>
+        </tr>
+      </thead>
+      <tbody><tr><td colspan="5">Checking booking records...</td></tr></tbody>
+    </table>
+  </div>  
 </div>
 
 <!-- Coach Performance Assessments Table -->
 <div class="card">
-  <div class="table-responsive" style="margin-bottom: 0.75rem;">
+  <div  style="margin-bottom: 0.75rem;">
     <h3 style="color: var(--primary-deep); margin: 0;">📝 Coach Performance Assessments</h3>
     <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Evaluation reports submitted by your coach.</p>
   </div>
+  <div class="table-responsive">
     <table class="data-table" id="assessments-table">
       <thead>
         <tr>
@@ -123,6 +127,7 @@
       </thead>
       <tbody><tr><td colspan="4">Loading assessments...</td></tr></tbody>
     </table>
+  </div>  
 </div>
 {% endblock %}
 
