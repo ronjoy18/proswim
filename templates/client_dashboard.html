@@ -18,17 +18,6 @@
 </div>
 
   <!-- Referral & Promo Balance Box -->
-<div class="card">   
-  <div id="referral-box" style="display: flex; width: 100%; background: #F0FDF4; border: 1px solid #BBF7D0; padding: 1rem 1.25rem; border-radius: 8px; max-width: 380px;">
-    <div style="font-size: 0.8rem; font-weight: 700; color: #166534;">YOUR CLIENT REFERRAL LINK</div>
-    <div style="display: flex; gap: 4px; margin: 4px 0;">
-      <input type="text" id="my-ref-link" readonly style="font-size: 0.75rem; padding: 4px; width: 100%; background: #FFF; border: 1px solid #86EFAC; border-radius: 4px;">
-      <button onclick="navigator.clipboard.writeText(document.getElementById('my-ref-link').value); alert('Referral link copied!');" class="clinical-btn btn-teal" style="padding: 4px 8px; font-size: 0.75rem;">Copy</button>
-    </div>
-    <div style="font-size: 0.75rem; color: #15803D;">Share with friends to earn <strong>$10.00 promo credit</strong>! Credit Balance: <strong id="promo-balance">$0.00</strong></div>
-  </div>
-</div>
-
 <!-- Booking Section -->
 <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem;">
   <div class="card">
@@ -130,6 +119,17 @@
       <tbody><tr><td colspan="4">Loading assessments...</td></tr></tbody>
     </table>
   </div>  
+</div>
+
+<div class="card">   
+  <div id="referral-box" style="display: flex; width: 100%; background: #F0FDF4; border: 1px solid #BBF7D0; padding: 1rem 1.25rem; border-radius: 8px; max-width: 380px;">
+    <div style="font-size: 0.8rem; font-weight: 700; color: #166534;">YOUR CLIENT REFERRAL LINK</div>
+    <div style="display: flex; gap: 4px; margin: 4px 0;">
+      <input type="text" id="my-ref-link" readonly style="font-size: 0.75rem; padding: 4px; width: 100%; background: #FFF; border: 1px solid #86EFAC; border-radius: 4px;">
+      <button onclick="navigator.clipboard.writeText(document.getElementById('my-ref-link').value); alert('Referral link copied!');" class="clinical-btn btn-teal" style="padding: 4px 8px; font-size: 0.75rem;">Copy</button>
+    </div>
+    <div style="font-size: 0.75rem; color: #15803D;">Share with friends to earn <strong>$10.00 promo credit</strong>! Credit Balance: <strong id="promo-balance">$0.00</strong></div>
+  </div>
 </div>
 {% endblock %}
 
