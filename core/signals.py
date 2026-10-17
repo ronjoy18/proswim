@@ -45,63 +45,62 @@ def process_order_lifecycle(sender, instance, created, **kwargs):
                     bonus_amount=bonus
                 )
 
-@receiver(post_save, sender=Order)
-def order_post_save_handler(sender, instance, created, **kwargs):
+#@receiver(post_save, sender=Order)
+#def order_post_save_handler(sender, instance, created, **kwargs):
     # Only run when a new order is created or when marked as paid
-    if created:
-        # 1. Send Email Notification
-        subject = f"Booking Confirmation: #{instance.id}"
-        message = (
-            f"Hello {instance.user.username},\n\n"
-            f"Your swimming session request #{instance.id} has been registered.\n"
-            "Thank you for choosing Proswim Academy!"
-        )
-        recipient_list = [instance.user.email]
+    #if created:
+  #     subject = f"Booking Confirmation: #{instance.id}"
+   #     message = (
+    #        f"Hello {instance.user.username},\n\n"
+     #       f"Your swimming session request #{instance.id} has been registered.\n"
+      #      "Thank you for choosing Proswim Academy!"
+       # )
+        #recipient_list = [instance.user.email]
 
-        try:
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=recipient_list,
-                fail_silently=True,
-            )
-        except Exception as e:
-            print(f"[EMAIL ERROR] Failed to send order email: {e}")
+        #try:
+         #   send_mail(
+          #      subject=subject,
+           #     message=message,
+            #    from_email=settings.DEFAULT_FROM_EMAIL,
+             #   recipient_list=recipient_list,
+              #  fail_silently=True,
+            #)
+        #except Exception as e:
+         #   print(f"[EMAIL ERROR] Failed to send order email: {e}")
 
         # 2. Create In-App Notification / Announcement
         # If you have an Announcement or Notification table:
-        Announcement.objects.create(
-            title="New Order Received",
-            content=f"Order #{instance.id} registered for {instance.user.username}."
-        )               
+        #Announcement.objects.create(
+         #   title="New Order Received",
+         #   content=f"Order #{instance.id} registered for {instance.user.username}."
+        #)               
 
-@receiver(post_save, sender=Order)
-def user_creation_notification(sender, instance, created, **kwargs):
-    if created:
-        link =f"https://proswim.onrender.com/dashboard/"
-        subject = f"account created:{instance.user.get_full_name()}"
-        message= (
-            f"Hello {instance.user.username}"
-            f"your proswim account was succefully created, you can click {link} to book services."
-            f"wish you the best in your swiming journey"
-            f"swim like a pro"
-        )
-        recipient_list= [instance.user.email]
-
-        try:
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=recipient_list,
-                fail_silently=True,
-                )
-        except Exception as e:
-                    print(f"[EMAIL ERROR] Failed to send order email: {e}")
-
-        Announcement.objects.create(
-                    title="New client signed in",
-                    content=f"Name:{instance.user.get_full_name}, username:{instance.user.username}."
-                )
+#@receiver(post_save, sender=Order)
+#def user_creation_notification(sender, instance, created, **kwargs):
+ #   if created:
+  #      link =f"https://proswim.onrender.com/dashboard/"
+   #     subject = f"account created:{instance.user.get_full_name()}"
+    #    message= (
+     #       f"Hello {instance.user.username}"
+      #      f"your proswim account was succefully created, you can click {link} to book services."
+       #     f"wish you the best in your swiming journey"
+#        #    f"swim like a pro"
+ #       )
+  #      recipient_list= [instance.user.email]
+#
+ #       try:
+  #          send_mail(
+   #             subject=subject,
+    #            message=message,
+     #           from_email=settings.DEFAULT_FROM_EMAIL,
+      #          recipient_list=recipient_list,
+       #         fail_silently=True,
+        #        )
+#        except Exception as e:
+ #                   print(f"[EMAIL ERROR] Failed to send order email: {e}")
+#
+ #       Announcement.objects.create(
+  #                  title="New client signed in",
+   #                 content=f"Name:{instance.user.get_full_name}, username:{instance.user.username}."
+    #            )
                       
