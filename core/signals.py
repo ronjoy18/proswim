@@ -3,8 +3,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
-from .models import ClientProfile, CoachProfile, Order, ReferralLedger, User
-
+from .models import ClientProfile, CoachProfile, Order, ReferralLedger, User, Announcement
+from django.core.mail import EmailMultiAlternatives
 
 @receiver(post_save, sender=User)
 def auto_create_user_profile(sender, instance, created, **kwargs):
@@ -44,3 +44,64 @@ def process_order_lifecycle(sender, instance, created, **kwargs):
                     order=instance,
                     bonus_amount=bonus
                 )
+
+@receiver(post_save, sender=Order)
+def order_post_save_handler(sender, instance, created, **kwargs):
+    # Only run when a new order is created or when marked as paid
+    if created:
+        # 1. Send Email Notification
+        subject = f"Booking Confirmation: #{instance.id}"
+        message = (
+            f"Hello {instance.user.username},\n\n"
+            f"Your swimming session request #{instance.id} has been registered.\n"
+            "Thank you for choosing Proswim Academy!"
+        )
+        recipient_list = [instance.user.email]
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=recipient_list,
+                fail_silently=True,
+            )
+        except Exception as e:
+            print(f"[EMAIL ERROR] Failed to send order email: {e}")
+
+        # 2. Create In-App Notification / Announcement
+        # If you have an Announcement or Notification table:
+        Announcement.objects.create(
+            title="New Order Received",
+            content=f"Order #{instance.id} registered for {instance.user.username}."
+        )               
+
+@receiver(post_save, sender=Order)
+def user_creation_notification(sender, instance, created, **kwargs):
+    if created:
+        link =f"https://proswim.onrender.com/dashboard/"
+        subject = f"account created:{instance.user.get_full_name()}"
+        message= (
+            f"Hello {instance.user.username}"
+            f"your proswim account was succefully created, you can click {link} to book services."
+            f"wish you the best in your swiming journey"
+            f"swim like a pro"
+        )
+        recipient_list= [instance.user.email]
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=recipient_list,
+                fail_silently=True,
+                )
+        except Exception as e:
+                    print(f"[EMAIL ERROR] Failed to send order email: {e}")
+
+        Announcement.objects.create(
+                    title="New client signed in",
+                    content=f"Name:{instance.user.get_full_name}, username:{instance.user.username}."
+                )
+                      
