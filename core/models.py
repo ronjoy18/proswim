@@ -17,7 +17,9 @@ class User(AbstractUser):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.CLIENT)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-
+    reset_otp = models.CharField(max_length=6, blank=True, null=True)
+    reset_otp_expiry = models.DateTimeField(blank=True, null=True)
+    
     def is_client(self):
         return self.role == self.Role.CLIENT
 
