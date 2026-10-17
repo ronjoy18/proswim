@@ -24,7 +24,7 @@
       {% for s in order.services.all %}
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
           <span>{{ s.name }}</span>
-          <strong>${{ s.price }}</strong>
+          <strong>Ksh{{ s.price }}</strong>
         </div>
       {% empty %}
         <div style="font-size: 0.95rem; color: #475569;">Bespoke / Custom Clinical Request</div>

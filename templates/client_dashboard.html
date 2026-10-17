@@ -26,7 +26,7 @@
       <input type="text" id="my-ref-link" readonly style="font-size: 0.75rem; padding: 4px; width: 100%; background: #FFF; border: 1px solid #86EFAC; border-radius: 4px;">
       <button onclick="navigator.clipboard.writeText(document.getElementById('my-ref-link').value); alert('Referral link copied!');" class="clinical-btn btn-teal" style="padding: 4px 8px; font-size: 0.75rem;">Copy</button>
     </div>
-    <div style="font-size: 0.75rem; color: #15803D;">Share with friends to earn <strong>$10.00 promo credit</strong>! Credit Balance: <strong id="promo-balance">$0.00</strong></div>
+    <div style="font-size: 0.75rem; color: #15803D;">Share with friends to earn <strong>10.00 % promo credit</strong>! Credit Balance: <strong id="promo-balance">Ksh0.00</strong></div>
   </div>
 </div>
 
@@ -232,7 +232,7 @@
           <tr>
             <td><code>#${o.id.substring(0, 8)}</code></td>
             <td style="font-size: 0.85rem;">${o.activity_name || "Swimming Lesson"}</td>
-            <td><strong>$${o.total_cost}</strong></td>
+            <td><strong>${o.total_cost}</strong></td>
             <td>
               ${o.is_paid 
                 ? `<span style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; color: #166534; background: #DCFCE7;">Confirmed</span>`
@@ -315,7 +315,7 @@
       if (item) {
         box.innerHTML += `
           <span style="background: #E0F2FE; color: var(--primary-deep); font-size: 0.8rem; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;">
-            ${item.name} ($${item.price})
+            ${item.name} (${item.price})
             <b style="cursor: pointer; color: red;" onclick="removeClientActivity('${item.id}')">&times;</b>
           </span>`;
       }
@@ -349,7 +349,7 @@
         const promoBal = document.getElementById("promo-balance");
         if (refBox) refBox.style.display = "block";
         if (refLinkInput) refLinkInput.value = c.referral_link || "";
-        if (promoBal) promoBal.textContent = `$${c.promo_credits || "0.00"}`;
+        if (promoBal) promoBal.textContent = `${c.promo_credits || "0.00"}`;
       }
     } catch(e) {}
 
@@ -383,7 +383,7 @@
             div.style.cursor = "pointer";
             div.style.borderBottom = "1px solid #F1F5F9";
             div.style.fontSize = "0.85rem";
-            div.innerHTML = `<strong>${item.name}</strong> - <span style="color: var(--secondary-teal); font-weight: bold;">$${item.price}</span>`;
+            div.innerHTML = `<strong>${item.name}</strong> - <span style="color: var(--secondary-teal); font-weight: bold;">Ksh${item.price}</span>`;
             div.addEventListener("click", () => addClientActivity(item.id, item.name, item.price));
             resultsBox.appendChild(div);
           });

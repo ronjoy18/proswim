@@ -24,7 +24,7 @@ function openAuthGateModal(activityId, serviceName, activityPrice) {
 
   // Populate selected service details
   document.getElementById("modal-activity-name").textContent = serviceName;
-  document.getElementById("modal-activity-price").textContent = `$${activityPrice}`;
+  document.getElementById("modal-activity-price").textContent = `Ksh${activityPrice}`;
   
   // Set dynamic action buttons
   document.getElementById("modal-btn-login").href = `/auth/?mode=login&role=client&redirect_activity=${activityId}`;

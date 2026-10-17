@@ -115,7 +115,7 @@
     const btnRegister = document.getElementById("modal-btn-register");
 
     if (nameEl) nameEl.textContent = activityName;
-    if (priceEl) priceEl.textContent = `$${activityPrice}`;
+    if (priceEl) priceEl.textContent = `Ksh${activityPrice}`;
     if (btnLogin) btnLogin.href = `/auth/?mode=login&role=client&redirect_activity=${activityId}`;
     if (btnRegister) btnRegister.href = `/auth/?mode=register&role=client&redirect_activity=${activityId}`;
 
