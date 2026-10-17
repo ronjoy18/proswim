@@ -239,7 +239,7 @@
             }
           }
         } catch (err) {
-          showToast("Could not connect to authentication gateway.");
+          alert("Could not connect to authentication gateway.");
         }
       });
     }
@@ -275,7 +275,7 @@
   const fb = document.getElementById("form-feedback");
 
   if (res.ok) {
-    showToast("Account registered successfully! Please sign in.");
+    alert("Account registered successfully! Please sign in.");
     toggleAuthMode("login");
   } else {
     let errorDetail = "Registration failed.";
@@ -296,13 +296,13 @@
     }
   }
 } catch (err) {
-  showToast("Could not communicate with the server: " + err.message);
+  alert("Could not communicate with the server: " + err.message);
 }
       });
     }
   });
 
-  function showToast(message, type = "success", duration = 4000) {
+  function alert(message, type = "success", duration = 4000) {
   // 1. Find the container on the page
   const container = document.getElementById("toast-container");
   if (!container) return;

@@ -453,7 +453,7 @@
             loadClientOrders();
           } else {
             const err = await res.json();
-            showToast(err.detail || "No coach free at this time window. Please try an alternative slot.");
+            alert(err.detail || "No coach free at this time window. Please try an alternative slot.");
           }
         } catch (err) {
           alert("Network failure communicating with scheduling service.");
@@ -467,7 +467,7 @@
     }
   });
 
-  function showToast(message, type = "success", duration = 4000) {
+  function alert(message, type = "success", duration = 4000) {
   // 1. Find the container on the page
   const container = document.getElementById("toast-container");
   if (!container) return;
