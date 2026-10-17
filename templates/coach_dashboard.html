@@ -192,10 +192,10 @@
             reportForm.reset();
           } else {
             const err = await res.json();
-            showToast("Submission error: " + (err.detail || JSON.stringify(err)));
+            alert("Submission error: " + (err.detail || JSON.stringify(err)));
           }
         } catch (err) {
-          showToast("Network failure publishing performance report.");
+          alert("Network failure publishing performance report.");
         } finally {
           if (reportBtn) {
             reportBtn.disabled = false;
@@ -321,7 +321,7 @@
   }
 }
 
-  function showToast(message, type = "success", duration = 4000) {
+  function alert(message, type = "success", duration = 4000) {
   // 1. Find the container on the page
   const container = document.getElementById("toast-container");
   if (!container) return;
