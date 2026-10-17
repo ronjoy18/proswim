@@ -18,7 +18,7 @@
     <div class=" nav-actions">
       {% if request.user.is_authenticated %}
         <span style="margin-right: auto; font-weight: 600;">
-          {{ request.user.get_full_name|default:request.user.username }}
+          {{request.user.username }}
         </span>
         <!-- <a href="/dashboard/" class="clinical-btn btn-outline" style="margin-right: 0.5rem;">Console</a> -->
         <button onclick="fetch('/api/v1/auth/logout/', {method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}}).then(()=>window.location.href='/')" class="clinical-btn btn-primary">Sign Out</button>
