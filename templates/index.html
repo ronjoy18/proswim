@@ -23,7 +23,7 @@
   <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem;">
     <div>
       <h2 style="font-size: 1.75rem; color: var(--primary-deep);">Available activities & Support</h2>
-      <p style="color: #64748B;">Select activities to undertake.</p>
+      <p style="color: #64748B;">Select any procedure or test below to schedule or place a diagnostic intake request.</p>
     </div>
   </div>
 
@@ -32,11 +32,11 @@
     <div class="card">
       <div>
         <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; background: #E0F2FE; color: var(--primary-deep); padding: 0.2rem 0.5rem; border-radius: 4px;">
-          {{ activity}}
+          {{ activity.category.get_category_type_display }}
         </span>
         <h3 style="margin-top: 0.75rem; color: var(--primary-deep);">{{ activity.name }}</h3>
         <p style="font-size: 0.85rem; color: #64748B; margin: 0.5rem 0 1rem 0; line-height: 1.4;">
-          {{ activity.preparation_instructions|default:"activities to book." }}
+          {{ activity.preparation_instructions|default:"Routine clinical specimen preparation applies." }}
         </p>
       </div>
       <div>
@@ -45,7 +45,7 @@
           Ksh{{ activity.price }}
           </span>
           <span style="font-size: 0.75rem; color: #64748B;">
-            ~{{ activity.duration_minutes }} minutes per lesson
+            ~{{ activity.turnaround_time_hours }}h Turnaround
           </span>
         </div>
         <button onclick="handleActivitySelection('{{ activity.id }}', '{{ activity.name|escapejs }}', '{{ activity.price }}')" class="clinical-btn btn-primary" style="width: 100%;">
@@ -54,7 +54,7 @@
       </div>
     </div>
     {% empty %}
-    <p style="color: #64748B;">Activities unavailable, pls contact proswim.</p>
+    <p style="color: #64748B;">No activities currently configured in the database.</p>
     {% endfor %}
   </div>
 </section>
