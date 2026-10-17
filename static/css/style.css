@@ -24,6 +24,10 @@ body {
   flex-direction: column;
 }
 
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
 .clinical-nav {
   background: var(--sterile-white);
   border-bottom: 1px solid var(--border-slate);
