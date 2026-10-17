@@ -239,7 +239,7 @@
             }
           }
         } catch (err) {
-          alert("Could not connect to authentication gateway.");
+          showToast("Could not connect to authentication gateway.");
         }
       });
     }
@@ -285,7 +285,7 @@
         .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
         .join(" | ");
     } catch {
-      errorDetail = `Server error (${res.status}). Check backend terminal traceback.`;
+      errorDetail = `Server error (${res.status}).`;
     }
 
     if (fb) {
@@ -296,7 +296,7 @@
     }
   }
 } catch (err) {
-  alert("Could not communicate with the server: " + err.message);
+  showToast("Could not communicate with the server: " + err.message);
 }
       });
     }

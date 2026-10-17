@@ -2,6 +2,8 @@
 
 {% block content %}
 <!-- 5-Second Toast Container -->
+ <!-- Toast Container: all toasts stack inside this element -->
+<div id="toast-container" class="toast-container"></div>
 <div id="coach-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
   <span style="font-size: 1.25rem;">✓</span>
   <div>
@@ -190,10 +192,10 @@
             reportForm.reset();
           } else {
             const err = await res.json();
-            alert("Submission error: " + (err.detail || JSON.stringify(err)));
+            showToast("Submission error: " + (err.detail || JSON.stringify(err)));
           }
         } catch (err) {
-          alert("Network failure publishing performance report.");
+          showToast("Network failure publishing performance report.");
         } finally {
           if (reportBtn) {
             reportBtn.disabled = false;
@@ -317,6 +319,50 @@
   } catch (e) {
     console.error("Coach schedules load error:", e);
   }
+}
+
+  function showToast(message, type = "success", duration = 4000) {
+  // 1. Find the container on the page
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+
+  // 2. Create a new <div> element for this specific toast
+  const toast = document.createElement("div");
+
+  // 3. Assign base and color-specific CSS classes
+  toast.className = `toast toast-${type}`;
+
+  // 4. Fill in the HTML structure (message + close button)
+  toast.innerHTML = `
+    <span>${message}</span>
+    <button style="background:none; border:none; color:inherit; font-size:16px; margin-left:12px; cursor:pointer;">&times;</button>
+  `;
+
+  // 5. Add the newly created toast inside the container
+  container.appendChild(toast);
+
+  // 6. Trigger animation slightly after appending so the transition runs
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 50);
+
+  // Helper function to remove the toast cleanly
+  const removeToast = () => {
+    toast.classList.remove("show");
+    // Wait for the fade-out animation to complete before removing from DOM
+    setTimeout(() => {
+      if (toast.parentElement) {
+        toast.remove();
+      }
+    }, 300);
+  };
+
+  // Close button click listener
+  const closeBtn = toast.querySelector("button");
+  closeBtn.addEventListener("click", removeToast);
+
+  // Auto-dismiss after the designated duration
+  setTimeout(removeToast, duration);
 }
 </script>
 {% endblock %}

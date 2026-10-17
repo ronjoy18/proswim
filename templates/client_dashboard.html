@@ -2,7 +2,7 @@
 
 {% block content %}
 <!-- 5-Second Toast Container -->
- 
+
 <div id="client-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
   <span style="font-size: 1.25rem;">✓</span>
   <div>
@@ -453,7 +453,7 @@
             loadClientOrders();
           } else {
             const err = await res.json();
-            alert(err.detail || "Booking failed. Please try an alternative slot.");
+            showToast(err.detail || "Booking failed. Please try an alternative slot.");
           }
         } catch (err) {
           alert("Network failure communicating with scheduling service.");
