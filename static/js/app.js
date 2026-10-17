@@ -9,7 +9,7 @@ function handleServiceSelection(activityId, serviceName, activityPrice) {
     // Open the Auth Gate Modal on the homepage
     openAuthGateModal(activityId, serviceName, activityPrice);
   } else {
-    // Authenticated dispatch: route directly to patient dashboard
+    // Authenticated dispatch: route directly to client dashboard
     window.location.href = `/dashboard/?action=order&activity_id=${activityId}`;
   }
 }
