@@ -13,9 +13,9 @@
 <!-- CORRECT -->
 <body data-authenticated="{% if request.user.is_authenticated %}true{% else %}false{% endif %}">
 
-  <nav class="clinical-nav">
+  <nav class="navbar">
     <a href="/" class="brand">Proswim <span style="color: var(--secondary-teal);">Academy</span></a>
-    <div class=" nav-buttons">
+    <div class=" nav-actions">
       {% if request.user.is_authenticated %}
         <span style="margin-right: auto; font-weight: 600;">
           {{ request.user.get_full_name|default:request.user.username }}
@@ -23,8 +23,8 @@
         <!-- <a href="/dashboard/" class="clinical-btn btn-outline" style="margin-right: 0.5rem;">Console</a> -->
         <button onclick="fetch('/api/v1/auth/logout/', {method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}}).then(()=>window.location.href='/')" class="clinical-btn btn-primary">Sign Out</button>
       {% else %}
-        <a href="/auth/?mode=register&role=client" class="clinical-btn btn-outline" style="margin-right: 0.5rem;">Signup</a>
-        <a href="/auth/?mode=login&role=client" class="clinical-btn btn-primary">Login</a>
+        <a href="/auth/?mode=register&role=client" class="btn-signup" style="margin-right: 0.5rem;">Signup</a>
+        <a href="/auth/?mode=login&role=client" class="btn-login">Login</a>
       {% endif %}
     </div>
   </nav>
