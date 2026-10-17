@@ -2,9 +2,7 @@
 
 {% block title %}Checkout & Intake Settlement | LabCare{% endblock %}
 
-{% block content %}
-<!-- Toast Container: all toasts stack inside this element -->
-<div id="toast-container" class="toast-container"></div>
+{% block content %}z
 <div style="max-width: 620px; margin: 2rem auto; background: var(--sterile-white); border: 1px solid var(--border-slate); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
   <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-slate); padding-bottom: 1rem; margin-bottom: 1.5rem;">
     <div>
@@ -24,7 +22,7 @@
       {% for s in order.services.all %}
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
           <span>{{ s.name }}</span>
-          <strong>Ksh{{ s.price }}</strong>
+          <strong>${{ s.price }}</strong>
         </div>
       {% empty %}
         <div style="font-size: 0.95rem; color: #475569;">Bespoke / Custom Clinical Request</div>
@@ -39,7 +37,7 @@
 
       <div style="border-top: 1px solid var(--border-slate); margin-top: 0.75rem; padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: baseline;">
         <span style="font-weight: 700; color: var(--primary-deep);">Total Payable</span>
-        <span style="font-size: 1.5rem; font-weight: 800; color: var(--secondary-teal);">Ksh{{ order.total_cost }}</span>
+        <span style="font-size: 1.5rem; font-weight: 800; color: var(--secondary-teal);">${{ order.total_cost }}</span>
       </div>
     </div>
   </div>
@@ -111,65 +109,22 @@
       });
 
       if (res.ok) {
-        showToast("Payment Confirmed! Your lesson has been marked as paid.");
+        alert("Payment Confirmed! Your lesson has been marked as paid.");
         window.location.href = "/dashboard/";
       } else {
-        showToast("Payment authorization failed. Please try again.");
+        alert("Payment authorization failed. Please try again.");
         if (btn) {
           btn.disabled = false;
           btn.textContent = "Confirm & Settle Payment";
         }
       }
     } catch (e) {
-      showToast("Network communication error during payment.");
+      alert("Network communication error during payment.");
       if (btn) {
         btn.disabled = false;
         btn.textContent = "Confirm & Settle Payment";
       }
     }
   }
-  function showToast(message, type = "success", duration = 4000) {
-  // 1. Find the container on the page
-  const container = document.getElementById("toast-container");
-  if (!container) return;
-
-  // 2. Create a new <div> element for this specific toast
-  const toast = document.createElement("div");
-
-  // 3. Assign base and color-specific CSS classes
-  toast.className = `toast toast-${type}`;
-
-  // 4. Fill in the HTML structure (message + close button)
-  toast.innerHTML = `
-    <span>${message}</span>
-    <button style="background:none; border:none; color:inherit; font-size:16px; margin-left:12px; cursor:pointer;">&times;</button>
-  `;
-
-  // 5. Add the newly created toast inside the container
-  container.appendChild(toast);
-
-  // 6. Trigger animation slightly after appending so the transition runs
-  setTimeout(() => {
-    toast.classList.add("show");
-  }, 50);
-
-  // Helper function to remove the toast cleanly
-  const removeToast = () => {
-    toast.classList.remove("show");
-    // Wait for the fade-out animation to complete before removing from DOM
-    setTimeout(() => {
-      if (toast.parentElement) {
-        toast.remove();
-      }
-    }, 300);
-  };
-
-  // Close button click listener
-  const closeBtn = toast.querySelector("button");
-  closeBtn.addEventListener("click", removeToast);
-
-  // Auto-dismiss after the designated duration
-  setTimeout(removeToast, duration);
-}
 </script>
 {% endblock %}

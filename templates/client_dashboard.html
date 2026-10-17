@@ -2,7 +2,6 @@
 
 {% block content %}
 <!-- 5-Second Toast Container -->
-
 <div id="client-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
   <span style="font-size: 1.25rem;">✓</span>
   <div>
@@ -16,17 +15,15 @@
     <h1 style="color: var(--primary-deep);">Client Workspace</h1>
     <p style="color: #64748B;">Book classes, track performance evaluations, and manage billing.</p>
   </div>
-</div>
-
+  
   <!-- Referral & Promo Balance Box -->
-<div class="card">   
-  <div id="referral-box" style="display: flex; width: 100%; background: #F0FDF4; border: 1px solid #BBF7D0; padding: 1rem 1.25rem; border-radius: 8px; max-width: 380px;">
+  <div id="referral-box" style="display: none; background: #F0FDF4; border: 1px solid #BBF7D0; padding: 1rem 1.25rem; border-radius: 8px; max-width: 380px;">
     <div style="font-size: 0.8rem; font-weight: 700; color: #166534;">YOUR CLIENT REFERRAL LINK</div>
     <div style="display: flex; gap: 4px; margin: 4px 0;">
       <input type="text" id="my-ref-link" readonly style="font-size: 0.75rem; padding: 4px; width: 100%; background: #FFF; border: 1px solid #86EFAC; border-radius: 4px;">
       <button onclick="navigator.clipboard.writeText(document.getElementById('my-ref-link').value); alert('Referral link copied!');" class="clinical-btn btn-teal" style="padding: 4px 8px; font-size: 0.75rem;">Copy</button>
     </div>
-    <div style="font-size: 0.75rem; color: #15803D;">Share with friends to earn <strong>10.00 % promo credit</strong>! Credit Balance: <strong id="promo-balance">Ksh0.00</strong></div>
+    <div style="font-size: 0.75rem; color: #15803D;">Share with friends to earn <strong>$10.00 promo credit</strong>! Credit Balance: <strong id="promo-balance">$0.00</strong></div>
   </div>
 </div>
 
@@ -70,67 +67,62 @@
 
 <!-- Scheduled Lessons Table -->
 <div class="card" style="margin-bottom: 2rem;">
-  <div class="table-responsive" style="margin-bottom: 0.75rem;">
+  <div style="margin-bottom: 0.75rem;">
     <h3 style="color: var(--primary-deep); margin: 0;">📅 My Confirmed Lesson Schedules</h3>
     <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live timetable with your automatically assigned coach.</p>
   </div>
-  <div class="table-responsive"> 
-    <table class="data-table" id="client-schedules-table">
-      <thead>
-        <tr>
-          <th>Activity</th>
-          <th>Assigned Coach</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+
+  <table class="data-table" id="client-schedules-table">
+    <thead>
+      <tr>
+        <th>Activity</th>
+        <th>Assigned Coach</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
     <tbody><tr><td colspan="5">Loading confirmed sessions...</td></tr></tbody>
-    </table>
-  </div>  
+  </table>
 </div>
 
 <!-- Active Bookings & Billing Table -->
 <div class="card" style="margin-bottom: 2rem;">
-  <div class="table-responsive" style="margin-bottom: 0.75rem;">
+  <div style="margin-bottom: 0.75rem;">
     <h3 style="color: var(--primary-deep);">💳 Active Bookings & Payment Status</h3>
     <p style="font-size: 0.85rem; color: #64748B;">All booked sessions appear here. Click "Pay Now" to settle invoices.</p>
   </div>
-  <div class="table-responsive">
-    <table class="data-table" id="billing-table">
-      <thead>
-        <tr>
-          <th>Booking Code</th>
-          <th>Requested Activities / Lessons</th>
-          <th>Total Amount</th>
-          <th>Status</th>
-          <th>Payment Action</th>
-        </tr>
-      </thead>
-      <tbody><tr><td colspan="5">Checking booking records...</td></tr></tbody>
-    </table>
-  </div>  
+  <table class="data-table" id="billing-table">
+    <thead>
+      <tr>
+        <th>Booking Code</th>
+        <th>Requested Activities / Lessons</th>
+        <th>Total Amount</th>
+        <th>Status</th>
+        <th>Payment Action</th>
+      </tr>
+    </thead>
+    <tbody><tr><td colspan="5">Checking booking records...</td></tr></tbody>
+  </table>
 </div>
 
 <!-- Coach Performance Assessments Table -->
 <div class="card">
-  <div  style="margin-bottom: 0.75rem;">
+  <div style="margin-bottom: 0.75rem;">
     <h3 style="color: var(--primary-deep); margin: 0;">📝 Coach Performance Assessments</h3>
     <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Evaluation reports submitted by your coach.</p>
   </div>
-  <div class="table-responsive">
-    <table class="data-table" id="assessments-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Coach</th>
-          <th>Performance Score (1-10)</th>
-          <th>Evaluation Remarks</th>
-        </tr>
-      </thead>
-      <tbody><tr><td colspan="4">Loading assessments...</td></tr></tbody>
-    </table>
-  </div>  
+  <table class="data-table" id="assessments-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Coach</th>
+        <th>Performance Score (1-10)</th>
+        <th>Evaluation Remarks</th>
+      </tr>
+    </thead>
+    <tbody><tr><td colspan="4">Loading assessments...</td></tr></tbody>
+  </table>
 </div>
 {% endblock %}
 
@@ -232,7 +224,7 @@
           <tr>
             <td><code>#${o.id.substring(0, 8)}</code></td>
             <td style="font-size: 0.85rem;">${o.activity_name || "Swimming Lesson"}</td>
-            <td><strong>${o.total_cost}</strong></td>
+            <td><strong>$${o.total_cost}</strong></td>
             <td>
               ${o.is_paid 
                 ? `<span style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; color: #166534; background: #DCFCE7;">Confirmed</span>`
@@ -315,7 +307,7 @@
       if (item) {
         box.innerHTML += `
           <span style="background: #E0F2FE; color: var(--primary-deep); font-size: 0.8rem; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;">
-            ${item.name} (${item.price})
+            ${item.name} ($${item.price})
             <b style="cursor: pointer; color: red;" onclick="removeClientActivity('${item.id}')">&times;</b>
           </span>`;
       }
@@ -349,7 +341,7 @@
         const promoBal = document.getElementById("promo-balance");
         if (refBox) refBox.style.display = "block";
         if (refLinkInput) refLinkInput.value = c.referral_link || "";
-        if (promoBal) promoBal.textContent = `${c.promo_credits || "0.00"}`;
+        if (promoBal) promoBal.textContent = `$${c.promo_credits || "0.00"}`;
       }
     } catch(e) {}
 
@@ -383,7 +375,7 @@
             div.style.cursor = "pointer";
             div.style.borderBottom = "1px solid #F1F5F9";
             div.style.fontSize = "0.85rem";
-            div.innerHTML = `<strong>${item.name}</strong> - <span style="color: var(--secondary-teal); font-weight: bold;">Ksh${item.price}</span>`;
+            div.innerHTML = `<strong>${item.name}</strong> - <span style="color: var(--secondary-teal); font-weight: bold;">$${item.price}</span>`;
             div.addEventListener("click", () => addClientActivity(item.id, item.name, item.price));
             resultsBox.appendChild(div);
           });
@@ -453,7 +445,7 @@
             loadClientOrders();
           } else {
             const err = await res.json();
-            alert(err.detail || "No coach free at this time window. Please try an alternative slot.");
+            alert(err.detail || "Booking failed. Please try an alternative slot.");
           }
         } catch (err) {
           alert("Network failure communicating with scheduling service.");
@@ -466,49 +458,5 @@
       });
     }
   });
-
-  function alert(message, type = "success", duration = 4000) {
-  // 1. Find the container on the page
-  const container = document.getElementById("toast-container");
-  if (!container) return;
-
-  // 2. Create a new <div> element for this specific toast
-  const toast = document.createElement("div");
-
-  // 3. Assign base and color-specific CSS classes
-  toast.className = `toast toast-${type}`;
-
-  // 4. Fill in the HTML structure (message + close button)
-  toast.innerHTML = `
-    <span>${message}</span>
-    <button style="background:none; border:none; color:inherit; font-size:16px; margin-left:12px; cursor:pointer;">&times;</button>
-  `;
-
-  // 5. Add the newly created toast inside the container
-  container.appendChild(toast);
-
-  // 6. Trigger animation slightly after appending so the transition runs
-  setTimeout(() => {
-    toast.classList.add("show");
-  }, 50);
-
-  // Helper function to remove the toast cleanly
-  const removeToast = () => {
-    toast.classList.remove("show");
-    // Wait for the fade-out animation to complete before removing from DOM
-    setTimeout(() => {
-      if (toast.parentElement) {
-        toast.remove();
-      }
-    }, 300);
-  };
-
-  // Close button click listener
-  const closeBtn = toast.querySelector("button");
-  closeBtn.addEventListener("click", removeToast);
-
-  // Auto-dismiss after the designated duration
-  setTimeout(removeToast, duration);
-}
 </script>
 {% endblock %}

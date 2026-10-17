@@ -2,8 +2,6 @@
 
 {% block content %}
 <!-- 5-Second Toast Container -->
- <!-- Toast Container: all toasts stack inside this element -->
-<div id="toast-container" class="toast-container"></div>
 <div id="coach-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
   <span style="font-size: 1.25rem;">✓</span>
   <div>
@@ -22,7 +20,7 @@
 
 <!-- Section 1: Client Monitoring Roster -->
 <div class="card" style="margin-bottom: 2rem;">
-  <div class="table-responsive" style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
+  <div zstyle="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
     <div>
       <h3 style="color: var(--primary-deep);">👥 Monitored Practicing Clients</h3>
       <p style="font-size: 0.85rem; color: #64748B;">Enrolled clients appear here immediately upon registration.</p>
@@ -31,22 +29,21 @@
       0 Clients
     </span>
   </div>
-  <div class="table-responsive">
-    <table class="data-table" id="clients-roster-table">
-      <thead>
-        <tr>
-          <th>Client Name</th>
-          <th>Contact Info</th>
-          <th>Enrolled</th>
-          <th>Total Lessons</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td colspan="5">Loading client roster...</td></tr>
-      </tbody>
-    </table>
-  </div>  
+
+  <table class="data-table" id="clients-roster-table">
+    <thead>
+      <tr>
+        <th>Client Name</th>
+        <th>Contact Info</th>
+        <th>Enrolled</th>
+        <th>Total Lessons</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="5">Loading client roster...</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <!-- Section 2: Student Performance Report Card -->
@@ -95,26 +92,25 @@
 <!-- Section 3: Dispatched Orders Tracker -->
 <!-- Section 3: Assigned Schedule & Dispatched Bookings -->
 <div class="card">
-  <div class="table-responsive" style="margin-bottom: 1rem;">
+  <div style="margin-bottom: 1rem;">
     <h3 style="color: var(--primary-deep); margin: 0;">🏊 My Assigned Training Sessions</h3>
     <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live feed of clients auto-routed into your calendar.</p>
   </div>
-  <div class="table-responsive">
-    <table class="data-table" id="orders-table">
-      <thead>
-        <tr>
-          <th>Schedule ID</th>
-          <th>Client / Student</th>
-          <th>Activity</th>
-          <th>Session Window</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td colspan="5">Loading asssigned calendar...</td></tr>
-      </tbody>
-    </table>
-  </div>
+
+  <table class="data-table" id="orders-table">
+    <thead>
+      <tr>
+        <th>Schedule ID</th>
+        <th>Client / Student</th>
+        <th>Activity</th>
+        <th>Session Window</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="5">Loading assigned calendar...</td></tr>
+    </tbody>
+  </table>
 </div>
 {% endblock %}
 
@@ -319,50 +315,6 @@
   } catch (e) {
     console.error("Coach schedules load error:", e);
   }
-}
-
-  function alert(message, type = "success", duration = 4000) {
-  // 1. Find the container on the page
-  const container = document.getElementById("toast-container");
-  if (!container) return;
-
-  // 2. Create a new <div> element for this specific toast
-  const toast = document.createElement("div");
-
-  // 3. Assign base and color-specific CSS classes
-  toast.className = `toast toast-${type}`;
-
-  // 4. Fill in the HTML structure (message + close button)
-  toast.innerHTML = `
-    <span>${message}</span>
-    <button style="background:none; border:none; color:inherit; font-size:16px; margin-left:12px; cursor:pointer;">&times;</button>
-  `;
-
-  // 5. Add the newly created toast inside the container
-  container.appendChild(toast);
-
-  // 6. Trigger animation slightly after appending so the transition runs
-  setTimeout(() => {
-    toast.classList.add("show");
-  }, 50);
-
-  // Helper function to remove the toast cleanly
-  const removeToast = () => {
-    toast.classList.remove("show");
-    // Wait for the fade-out animation to complete before removing from DOM
-    setTimeout(() => {
-      if (toast.parentElement) {
-        toast.remove();
-      }
-    }, 300);
-  };
-
-  // Close button click listener
-  const closeBtn = toast.querySelector("button");
-  closeBtn.addEventListener("click", removeToast);
-
-  // Auto-dismiss after the designated duration
-  setTimeout(removeToast, duration);
 }
 </script>
 {% endblock %}

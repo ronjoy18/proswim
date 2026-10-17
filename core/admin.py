@@ -36,14 +36,14 @@ class CoachProfileAdmin(admin.ModelAdmin):
         "license_number",
         
     ]
-    actions = ["verify_coaches_and_notify"]
+    actions = ["verify_doctors_and_notify"]
 
     def user_name(self, obj):
         return obj.user.get_full_name() or obj.user.username
     user_name.short_description = "Coach Name"
 
     @admin.action(description="Verify selected coaches and send confirmation email")
-    def verify_coaches_and_notify(self, request, queryset):
+    def verify_doctors_and_notify(self, request, queryset):
         for coach in queryset:
             coach.save()
             send_mail(

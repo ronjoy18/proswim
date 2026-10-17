@@ -1,13 +1,7 @@
 import os
-from django.contrib import messages
 from datetime import timedelta
 from decimal import Decimal
-import random
-from datetime import timedelta
-from django.utils import timezone
-from django.contrib import messages
-from django.core.mail import send_mail
-from django.contrib.auth import get_user_model
+
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
@@ -39,75 +33,6 @@ from .serializers import (
     LessonScheduleSerializer,
 )
 
-
-
-
-#def forgot_password_view(request):
-
-   # User = get_user_model()
-
-   # if request.method == "POST":
-    #    email = request.POST.get("email", "").strip()
-     #   user = User.objects.filter(email=email).first()
-
-       # if user:
-            # 1. Generate 6-digit random code
-       #    otp = f"{random.randint(100000, 999999)}"
-       #     user.reset_otp = otp
-       #     user.reset_otp_expiry = timezone.now() + timedelta(minutes=10) # Valid 10 mins
-       #     user.save()
-#
-            # 2. Email the OTP
-      #      send_mail(
-      #          subject="Your Proswim Password Reset OTP",
-      #          message=f"Your password reset code is: {otp}\nIt expires in 10 minutes.",
-       #         from_email=settings.DEFAULT_FROM_EMAIL,
-       #         recipient_list=[user.email],
-        #        fail_silently=False,
-       #     )
-#
-       #     # Store user ID or email in session for the verification step
-   #         request.session["reset_email"] = user.email
-    #        messages.success(request, "An OTP has been sent to your email.")
-      #      return redirect("verify_otp")
-     #   else:
-      ##     messages.error(request, "No account found with this email.")
-
-   # return render(request, "core/forgot_password.html")
-
-
-#def verify_otp_view(request):
-  #  email = request.session.get("reset_email")
-   # if not email:
-   #     return redirect("forgot_password")
-
-   # if request.method == "POST":
-     #   otp_entered = request.POST.get("otp", "").strip()
-     ##   new_password = request.POST.get("new_password", "")
-     #   confirm_password = request.POST.get("confirm_password", "")
-
-      #  user = User.objects.filter(email=email).first()
-
-      #  if not user or user.reset_otp != otp_entered:
-      #      messages.error(request, "Invalid OTP code.")
-     #   elif timezone.now() > user.reset_otp_expiry:
-      #      messages.error(request, "OTP has expired. Please request a new one.")
-      #  elif new_password != confirm_password:
-      #      messages.error(request, "Passwords do not match.")
-       # elif len(new_password) < 8:
-       #     messages.error(request, "Password must be at least 8 characters long.")
-       # else:
-            # Valid OTP: Set new password and clean up OTP
-          #  user.set_password(new_password)
-           # user.reset_otp = None
-           # user.reset_otp_expiry = None
-            #user.save()
-
-            #del request.session["reset_email"]
-            #messages.success(request, "Password reset successful! Please log in.")
-            #return redirect("login")
-
-    #return render(request, "core/verify_otp.html")
 
 def index_view(request):
     activities = Activity.objects.filter(is_active=True)
@@ -149,7 +74,6 @@ class SessionLoginAPIView(views.APIView):
         user = authenticate(request, username=username, password=password)
 
         if not user:
-            
             return Response({"detail": "Invalid authentication credentials."}, status=status.HTTP_401_UNAUTHORIZED)
 
         if request.data.get("portal") == "public" and user.is_internal():
