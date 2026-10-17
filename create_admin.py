@@ -9,9 +9,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Production Admin Credentials
-ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@proswim.com")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "ProswimAdmin2026!")
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "Sam")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "proswimacademykenya@gmail.com")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "Sam123k@")
 
 if not User.objects.filter(username=ADMIN_USERNAME).exists():
     user = User.objects.create_superuser(
