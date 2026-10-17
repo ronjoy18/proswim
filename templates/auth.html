@@ -29,7 +29,8 @@
     font-weight: bold;
   }
 </style>
-
+<!-- Toast Container: all toasts stack inside this element -->
+<div id="toast-container" class="toast-container"></div>
 <div style="max-width: 480px; margin: 0 auto; background: #dedce4; border: 1px solid var(--border-slate); border-radius: 8px; padding: 2rem;">
   
   <div style="display: flex; border-bottom: 1px solid var(--border-slate); margin-bottom: 1.5rem;">
@@ -274,7 +275,7 @@
   const fb = document.getElementById("form-feedback");
 
   if (res.ok) {
-    alert("Account registered successfully! Please sign in.");
+    showToast("Account registered successfully! Please sign in.");
     toggleAuthMode("login");
   } else {
     let errorDetail = "Registration failed.";
@@ -300,5 +301,49 @@
       });
     }
   });
+
+  function showToast(message, type = "success", duration = 4000) {
+  // 1. Find the container on the page
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+
+  // 2. Create a new <div> element for this specific toast
+  const toast = document.createElement("div");
+
+  // 3. Assign base and color-specific CSS classes
+  toast.className = `toast toast-${type}`;
+
+  // 4. Fill in the HTML structure (message + close button)
+  toast.innerHTML = `
+    <span>${message}</span>
+    <button style="background:none; border:none; color:inherit; font-size:16px; margin-left:12px; cursor:pointer;">&times;</button>
+  `;
+
+  // 5. Add the newly created toast inside the container
+  container.appendChild(toast);
+
+  // 6. Trigger animation slightly after appending so the transition runs
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 50);
+
+  // Helper function to remove the toast cleanly
+  const removeToast = () => {
+    toast.classList.remove("show");
+    // Wait for the fade-out animation to complete before removing from DOM
+    setTimeout(() => {
+      if (toast.parentElement) {
+        toast.remove();
+      }
+    }, 300);
+  };
+
+  // Close button click listener
+  const closeBtn = toast.querySelector("button");
+  closeBtn.addEventListener("click", removeToast);
+
+  // Auto-dismiss after the designated duration
+  setTimeout(removeToast, duration);
+}
 </script>
 {% endblock %}

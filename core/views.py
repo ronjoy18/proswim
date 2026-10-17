@@ -1,4 +1,5 @@
 import os
+from django.contrib import messages
 from datetime import timedelta
 from decimal import Decimal
 
@@ -74,6 +75,7 @@ class SessionLoginAPIView(views.APIView):
         user = authenticate(request, username=username, password=password)
 
         if not user:
+            
             return Response({"detail": "Invalid authentication credentials."}, status=status.HTTP_401_UNAUTHORIZED)
 
         if request.data.get("portal") == "public" and user.is_internal():
