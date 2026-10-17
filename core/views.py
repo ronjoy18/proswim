@@ -40,9 +40,12 @@ from .serializers import (
 )
 
 
-User = get_user_model()
+
 
 def forgot_password_view(request):
+
+    User = get_user_model()
+    
     if request.method == "POST":
         email = request.POST.get("email", "").strip()
         user = User.objects.filter(email=email).first()
