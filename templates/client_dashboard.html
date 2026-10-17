@@ -453,7 +453,7 @@
             loadClientOrders();
           } else {
             const err = await res.json();
-            showToast(err.detail || "Booking failed. Please try an alternative slot.");
+            alert(err.detail || "Booking failed. Please try an alternative slot.");
           }
         } catch (err) {
           alert("Network failure communicating with scheduling service.");
