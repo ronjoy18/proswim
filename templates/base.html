@@ -23,8 +23,8 @@
         <!-- <a href="/dashboard/" class="clinical-btn btn-outline" style="margin-right: 0.5rem;">Console</a> -->
         <button onclick="fetch('/api/v1/auth/logout/', {method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}}).then(()=>window.location.href='/')" class="clinical-btn btn-primary">Sign Out</button>
       {% else %}
-        <a href="/auth/?mode=login&role=coach" class="clinical-btn btn-outline" style="margin-right: 0.5rem;">Coach Portal</a>
-        <a href="/auth/?mode=login&role=client" class="clinical-btn btn-primary">Client Access</a>
+        <a href="/auth/?mode=register&role=client" class="clinical-btn btn-outline" style="margin-right: 0.5rem;">sign up</a>
+        <a href="/auth/?mode=login&role=client" class="clinical-btn btn-primary">login</a>
       {% endif %}
     </div>
   </nav>
