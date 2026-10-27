@@ -2,28 +2,28 @@
 
 {% block content %}
 <!-- 5-Second Toast Container -->
-<div id="client-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
-  <span style="font-size: 1.25rem;">✓</span>
+<div id="client-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #f0f9ff; border: 1px solid var(--secondary-teal); color: var(--primary-deep); padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
+  <span style="font-size: 1.25rem; color: var(--secondary-teal);">✓</span>
   <div>
     <strong id="toast-title">Request Submitted</strong>
-    <p id="toast-message" style="font-size: 0.85rem; margin: 0; color: #047857;"></p>
+    <p id="toast-message" style="font-size: 0.85rem; margin: 0; color: #0369a1;"></p>
   </div>
 </div>
 
 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
   <div>
-    <h1 style="color: var(--primary-deep);">Client Workspace</h1>
-    <p style="color: #64748B;">Book classes, track performance evaluations, and manage billing.</p>
+    <h1 style="color: var(--primary-deep); margin-bottom: 0.25rem;">Client Workspace</h1>
+    <p style="color: #64748B;">Book training classes, track evaluations, and manage your invoices.</p>
   </div>
   
   <!-- Referral & Promo Balance Box -->
-  <div id="referral-box" style="display: none; background: #F0FDF4; border: 1px solid #BBF7D0; padding: 1rem 1.25rem; border-radius: 8px; max-width: 380px;">
-    <div style="font-size: 0.8rem; font-weight: 700; color: #166534;">YOUR CLIENT REFERRAL LINK</div>
-    <div style="display: flex; gap: 4px; margin: 4px 0;">
-      <input type="text" id="my-ref-link" readonly style="font-size: 0.75rem; padding: 4px; width: 100%; background: #FFF; border: 1px solid #86EFAC; border-radius: 4px;">
-      <button onclick="navigator.clipboard.writeText(document.getElementById('my-ref-link').value); alert('Referral link copied!');" class="clinical-btn btn-teal" style="padding: 4px 8px; font-size: 0.75rem;">Copy</button>
+  <div id="referral-box" style="display: none; background: #f0f9ff; border: 1px solid var(--border-slate); padding: 1rem 1.25rem; border-radius: 8px; max-width: 380px;">
+    <div style="font-size: 0.8rem; font-weight: 700; color: var(--secondary-teal);">YOUR CLIENT REFERRAL LINK</div>
+    <div style="display: flex; gap: 4px; margin: 6px 0;">
+      <input type="text" id="my-ref-link" readonly style="font-size: 0.75rem; padding: 6px; width: 100%; background: #FFF; border: 1px solid var(--border-slate); border-radius: 4px;">
+      <button onclick="navigator.clipboard.writeText(document.getElementById('my-ref-link').value); alert('Referral link copied!');" class="clinical-btn btn-teal" style="padding: 4px 10px; font-size: 0.75rem;">Copy</button>
     </div>
-    <div style="font-size: 0.75rem; color: #15803D;">Share with friends to earn <strong>10.00% promo credit</strong>! Credit Balance: <strong id="promo-balance">Ksh0.00</strong></div>
+    <div style="font-size: 0.75rem; color: #0369a1;">Share with friends to earn credits! Current Balance: <strong id="promo-balance">Ksh 0.00</strong></div>
   </div>
 </div>
 
@@ -31,20 +31,20 @@
 <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem;">
   <div class="card">
     <div style="border-bottom: 1px solid var(--border-slate); padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-      <h3 style="color: var(--primary-deep);">🏊 Book Swimming Lessons</h3>
-      <p style="font-size: 0.8rem; color: #64748B;">Search catalog activities and pick a daytime session.</p>
+      <h3 style="color: var(--primary-deep); margin: 0;">🏊 Book Swimming Lessons</h3>
+      <p style="font-size: 0.8rem; color: #64748B; margin-top: 0.25rem;">Search catalog activities and pick a daytime training slot.</p>
     </div>
 
     <form id="client-order-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
-      <div style="margin-bottom: 0.5rem; position: relative;">
+      <div style="position: relative;">
         <label style="font-size: 0.8rem; font-weight: 600;">Search Lessons</label>
-        <input type="text" id="client-catalog-search" placeholder="Type lesson name (e.g. Freestyle, Water Safety)..." style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;" autocomplete="off">
-        <div id="client-search-results" style="max-height: 140px; overflow-y: auto; border: 1px solid var(--border-slate); border-radius: 4px; display: none; background: #FFF; margin-top: 4px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: absolute; width: 100%; z-index: 10;"></div>
+        <input type="text" id="client-catalog-search" placeholder="Type lesson name (e.g. Freestyle, Water Safety)..." style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;" autocomplete="off">
+        <div id="client-search-results" style="max-height: 140px; overflow-y: auto; border: 1px solid var(--border-slate); border-radius: 6px; display: none; background: #FFF; margin-top: 4px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: absolute; width: 100%; z-index: 10;"></div>
       </div>
 
-      <div id="client-selected-items" style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.5rem;"></div>
+      <div id="client-selected-items" style="display: flex; flex-wrap: wrap; gap: 0.35rem;"></div>
 
-      <div style="margin-bottom: 0.75rem;">
+      <div>
         <label style="display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.35rem;">
           Preferred Session Date & Start Time *
         </label>
@@ -53,20 +53,20 @@
           id="lesson-start-time" 
           step="1800" 
           required 
-          style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;"
+          style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;"
         >
-        <small style="color: #64748B; font-size: 0.75rem;">
+        <small style="color: #64748B; font-size: 0.75rem; display: block; margin-top: 4px;">
           Operating hours: <strong>06:00 AM – 06:00 PM</strong> daily. Lessons must finish before 06:00 PM.
         </small>
       </div>
 
-      <button type="submit" id="submit-activity-btn" class="clinical-btn btn-primary" style="width: 100%;">Submit Booking & Schedule Coach</button>
+      <button type="submit" id="submit-activity-btn" class="clinical-btn btn-primary" style="width: 100%; padding: 0.75rem;">Submit Booking & Schedule Coach</button>
     </form>
   </div>
 </div>
 
 <!-- Scheduled Lessons Table -->
-<div class="card" style="margin-bottom: 2rem;">
+<div class="card table-responsive" style="margin-bottom: 2rem;">
   <div style="margin-bottom: 0.75rem;">
     <h3 style="color: var(--primary-deep); margin: 0;">📅 My Confirmed Lesson Schedules</h3>
     <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live timetable with your automatically assigned coach.</p>
@@ -87,10 +87,10 @@
 </div>
 
 <!-- Active Bookings & Billing Table -->
-<div class="card" style="margin-bottom: 2rem;">
+<div class="card table-responsive" style="margin-bottom: 2rem;">
   <div style="margin-bottom: 0.75rem;">
-    <h3 style="color: var(--primary-deep);">💳 Active Bookings & Payment Status</h3>
-    <p style="font-size: 0.85rem; color: #64748B;">All booked sessions appear here. Click "Pay Now" to settle invoices.</p>
+    <h3 style="color: var(--primary-deep); margin: 0;">💳 Active Bookings & Payment Status</h3>
+    <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">All booked sessions appear here. Click "Pay Now" to settle invoices.</p>
   </div>
   <table class="data-table" id="billing-table">
     <thead>
@@ -107,10 +107,10 @@
 </div>
 
 <!-- Coach Performance Assessments Table -->
-<div class="card">
+<div class="card table-responsive">
   <div style="margin-bottom: 0.75rem;">
     <h3 style="color: var(--primary-deep); margin: 0;">📝 Coach Performance Assessments</h3>
-    <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Evaluation reports submitted by your coach.</p>
+    <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Evaluation reports submitted by your assigned coach.</p>
   </div>
   <table class="data-table" id="assessments-table">
     <thead>

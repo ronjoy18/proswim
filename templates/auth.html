@@ -1,40 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<style>
-  .rule-tracker {
-    list-style: none;
-    padding-left: 0.25rem;
-    margin: 0.5rem 0 0.75rem 0;
-    font-size: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .rule-tracker li.invalid {
-    color: #94A3B8;
-  }
-  .rule-tracker li.invalid::before {
-    content: "✕ ";
-    color: #EF4444;
-    font-weight: bold;
-  }
-  .rule-tracker li.valid {
-    color: #166534;
-    font-weight: 600;
-  }
-  .rule-tracker li.valid::before {
-    content: "✓ ";
-    color: #16A34A;
-    font-weight: bold;
-  }
-</style>
-
-<div style="max-width: 480px; margin: 0 auto; background: #dedce4; border: 1px solid var(--border-slate); border-radius: 8px; padding: 2rem;">
+<div class="card" style="max-width: 480px; margin: 2rem auto; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
   
   <div style="display: flex; border-bottom: 1px solid var(--border-slate); margin-bottom: 1.5rem;">
-    <button id="tab-login" class="clinical-btn" style="flex: 1; border-radius: 0; border-bottom: 2px solid var(--primary-deep);" onclick="toggleAuthMode('login')">Sign In</button>
-    <button id="tab-register" class="clinical-btn" style="flex: 1; border-radius: 0;" onclick="toggleAuthMode('register')">Register Account</button>
+    <button id="tab-login" class="clinical-btn" style="flex: 1; border-radius: 0; background: transparent; border-bottom: 2px solid var(--secondary-teal); color: var(--primary-deep);" onclick="toggleAuthMode('login')">Sign In</button>
+    <button id="tab-register" class="clinical-btn" style="flex: 1; border-radius: 0; background: transparent; color: #64748B;" onclick="toggleAuthMode('register')">Register Account</button>
   </div>
 
   <div id="form-feedback" style="display: none; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.85rem;"></div>
@@ -42,22 +13,22 @@
   <!-- Sign In Form -->
   <form id="login-form">
     <div style="margin-bottom: 1rem;">
-      <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Account Handle / Username</label>
-      <input type="text" name="username" required style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Account Handle / Username</label>
+      <input type="text" name="username" required style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 6px;">
     </div>
     <div style="margin-bottom: 1.5rem;">
-      <label style="display: block; font-weight: 600; margin-bottom: 0.25rem;">Password</label>
-      <input type="password" name="password" required style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Password</label>
+      <input type="password" name="password" required style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 6px;">
     </div>
     <input type="hidden" name="portal" value="public">
-    <button type="submit" class="clinical-btn btn-primary" style="width: 100%;">Verify & Sign In</button>
+    <button type="submit" class="clinical-btn btn-primary" style="width: 100%; padding: 0.75rem;">Verify & Sign In</button>
   </form>
 
   <!-- Dynamic Registration Form -->
   <form id="registration-form" style="display: none;">
     <div style="margin-bottom: 0.75rem;">
-      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Identity Role</label>
-      <select name="role" id="reg-role" style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 4px;" onchange="handleRoleFieldToggles(this.value)">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Identity Role</label>
+      <select name="role" id="reg-role" style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-slate); border-radius: 6px; background: #FFF;" onchange="handleRoleFieldToggles(this.value)">
         <option value="CLIENT">Client</option>
         <option value="COACH">Proswim Coach</option>
       </select>
@@ -65,38 +36,38 @@
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem;">
       <div>
-        <label style="display: block; font-weight: 600; font-size: 0.85rem;">First Name</label>
-        <input type="text" name="first_name" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+        <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">First Name</label>
+        <input type="text" name="first_name" required style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;">
       </div>
       <div>
-        <label style="display: block; font-weight: 600; font-size: 0.85rem;">Last Name</label>
-        <input type="text" name="last_name" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+        <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Last Name</label>
+        <input type="text" name="last_name" required style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;">
       </div>
     </div>
 
     <div style="margin-bottom: 0.75rem;">
-      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Username</label>
-      <input type="text" name="username" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Username</label>
+      <input type="text" name="username" required style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;">
     </div>
 
     <div style="margin-bottom: 0.75rem;">
-      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Email Address</label>
-      <input type="email" name="email" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Email Address</label>
+      <input type="email" name="email" required style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;">
     </div>
 
     <div id="coach-spec-fields" style="display: none; margin-bottom: 0.75rem;">
-      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Coach Number / License</label>
-      <input type="text" name="license_number" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Coach License / Registration Number</label>
+      <input type="text" name="license_number" style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;">
     </div>
 
     <div id="client-referral-fields" style="margin-bottom: 0.75rem;">
-      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Referral Code (Optional)</label>
-      <input type="text" name="referral_code" placeholder="Referral Code" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px; margin-bottom: 0.25rem;">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Referral Code (Optional)</label>
+      <input type="text" name="referral_code" placeholder="Referral Code" style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;">
     </div>
 
     <div style="margin-bottom: 0.75rem;">
-      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Password</label>
-      <input type="password" name="password" id="auth-password" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;" autocomplete="new-password">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Password</label>
+      <input type="password" name="password" id="auth-password" required style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;" autocomplete="new-password">
       
       <ul class="rule-tracker">
         <li id="rule-len" class="invalid">Minimum 8 characters</li>
@@ -108,11 +79,11 @@
     </div>
 
     <div style="margin-bottom: 1.5rem;">
-      <label style="display: block; font-weight: 600; font-size: 0.85rem;">Confirm Password</label>
-      <input type="password" name="password_confirmation" id="auth-password-confirm" required style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-slate); border-radius: 4px;" autocomplete="new-password">
+      <label style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem;">Confirm Password</label>
+      <input type="password" name="password_confirmation" id="auth-password-confirm" required style="width: 100%; padding: 0.55rem; border: 1px solid var(--border-slate); border-radius: 6px;" autocomplete="new-password">
     </div>
 
-    <button type="submit" class="clinical-btn btn-teal" style="width: 100%;">Create Account</button>
+    <button type="submit" class="clinical-btn btn-teal" style="width: 100%; padding: 0.75rem;">Create Account</button>
   </form>
 
 </div>

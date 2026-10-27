@@ -2,30 +2,30 @@
 
 {% block content %}
 <!-- 5-Second Toast Container -->
-<div id="coach-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
-  <span style="font-size: 1.25rem;">✓</span>
+<div id="coach-toast-notification" style="display: none; position: fixed; top: 1.5rem; right: 1.5rem; z-index: 99999; background: #f0f9ff; border: 1px solid var(--secondary-teal); color: var(--primary-deep); padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); align-items: center; gap: 0.75rem;">
+  <span style="font-size: 1.25rem; color: var(--secondary-teal);">✓</span>
   <div>
     <strong id="toast-title">Success</strong>
-    <p id="toast-message" style="font-size: 0.85rem; margin: 0; color: #047857;"></p>
+    <p id="toast-message" style="font-size: 0.85rem; margin: 0; color: #0369a1;"></p>
   </div>
 </div>
 
 <!-- Header -->
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
   <div>
-    <h1 style="color: var(--primary-deep); margin-bottom: 0.25rem;">Proswim Coach Profile</h1>
-    <p style="color: #64748B;">Assigned clients and performance evaluations.</p>
+    <h1 style="color: var(--primary-deep); margin-bottom: 0.25rem;">Proswim Coach Console</h1>
+    <p style="color: #64748B;">Assigned clients, session calendars, and student evaluations.</p>
   </div>
 </div>
 
 <!-- Section 1: Client Monitoring Roster -->
-<div class="card" style="margin-bottom: 2rem;">
-  <div zstyle="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
+<div class="card table-responsive" style="margin-bottom: 2rem;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
     <div>
-      <h3 style="color: var(--primary-deep);">👥 Monitored Practicing Clients</h3>
-      <p style="font-size: 0.85rem; color: #64748B;">Enrolled clients appear here immediately upon registration.</p>
+      <h3 style="color: var(--primary-deep); margin: 0;">👥 Enrolled Trainees & Clients</h3>
+      <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Trained students appear here immediately upon class booking.</p>
     </div>
-    <span id="client-count-badge" style="background: #E0F2FE; color: var(--primary-deep); padding: 4px 10px; border-radius: 9999px; font-weight: 700; font-size: 0.8rem;">
+    <span id="client-count-badge" class="badge">
       0 Clients
     </span>
   </div>
@@ -55,46 +55,41 @@
     </p>
   </div>
 
-  <!-- Single Valid Form -->
   <form id="coach-report-form">
-    <!-- 1. Select the specific enrolled student -->
     <div style="margin-bottom: 0.85rem;">
       <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary-deep); margin-bottom: 0.35rem;">
         Target Student *
       </label>
-      <select id="report-client-select" name="client" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 4px; background: #F8FAFC;">
+      <select id="report-client-select" name="client" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 6px; background: #F8FAFC;">
         <option value="">-- Choose Enrolled Student --</option>
       </select>
     </div>
 
-    <!-- 2. Performance score (1 to 10) -->
     <div style="margin-bottom: 0.85rem;">
       <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary-deep); margin-bottom: 0.35rem;">
         Water Safety & Performance Score (1 - 10) *
       </label>
-      <input type="number" id="report-score" name="performance_score" min="1" max="10" value="8" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 4px;">
+      <input type="number" id="report-score" name="performance_score" min="1" max="10" value="8" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 6px;">
     </div>
 
-    <!-- 3. Coach Remarks -->
     <div style="margin-bottom: 1.25rem;">
       <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary-deep); margin-bottom: 0.35rem;">
         Coach Assessment Remarks *
       </label>
-      <textarea id="report-remarks" name="coach_remarks" rows="3" required placeholder="Detail swimming progress, stroke technique, breath control, or points of improvement..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 4px; font-family: inherit;"></textarea>
+      <textarea id="report-remarks" name="coach_remarks" rows="3" required placeholder="Detail swimming progress, stroke technique, breath control, or points of improvement..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-slate); border-radius: 6px; font-family: inherit;"></textarea>
     </div>
 
-    <button id="send-report-btn" type="submit" class="clinical-btn btn-teal" style="width: 100%;">
+    <button id="send-report-btn" type="submit" class="clinical-btn btn-teal" style="width: 100%; padding: 0.75rem;">
       Publish Report to Student
     </button>
   </form>
 </div>
 
-<!-- Section 3: Dispatched Orders Tracker -->
 <!-- Section 3: Assigned Schedule & Dispatched Bookings -->
-<div class="card">
+<div class="card table-responsive">
   <div style="margin-bottom: 1rem;">
     <h3 style="color: var(--primary-deep); margin: 0;">🏊 My Assigned Training Sessions</h3>
-    <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live feed of clients auto-routed into your calendar.</p>
+    <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.25rem;">Live feed of clients auto-routed into your coaching timetable.</p>
   </div>
 
   <table class="data-table" id="orders-table">

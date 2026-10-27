@@ -1,88 +1,181 @@
+/* ==========================================================================
+   1. Design Tokens & Color Variables
+   ========================================================================== */
 :root {
-  --primary-deep: #0B4F6C;
-  --secondary-teal: #006994;
-  --sterile-white: #FFFFFF;
-  --neutral-slate: #0F172A;
-  --neutral-soft: #F8FAFC;
-  --border-slate: #E2E8F0;
-  --alert-red: #EF4444;
-  --success-green: #10B981;
+  --primary-deep: #0f172a;
+  --secondary-teal: #0284c7;           /* Pool / Azure Blue */
+  --sterile-white: #ffffff;
+  --neutral-slate: #0f172a;
+  --neutral-soft: #f8fafc;
+  --border-slate: #e2e8f0;
+  --alert-red: #ef4444;
+  --success-green: #0284c7;           /* Converted to Swimming Blue */
+  --page-bg: #071322;
+  --text-main: #f8fafc;
+  --text-muted: #e2e8f0;
+  --brand-blue: #0284c7;
+  --accent-mint: #38bdf8;             /* Light Swimming Pool Cyan */
+  --accent-mint-dim: rgba(56, 189, 248, 0.25);
+  --glass-card-bg: linear-gradient(
+    135deg,
+    rgba(2, 132, 199, 0.40) 0%,
+    rgba(14, 116, 144, 0.35) 50%,
+    rgba(15, 23, 42, 0.55) 100%
+  );
 }
 
-* {
+/* ==========================================================================
+   2. Reset & Viewport Constraints
+   ========================================================================== */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-.navbar{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #e5e7eb;
-  gap: 12px;
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-.nav-brand{
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #0b4d0b;
-}
 body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background-color: var(--neutral-soft);
   color: var(--neutral-slate);
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 12px;
-}
-.clinical-nav {
-  background: var(--sterile-white);
-  border-bottom: 1px solid var(--border-slate);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+body.home-page {
+  background-color: var(--page-bg);
+  color: var(--text-main);
 }
 
-.clinical-nav .brand {
-  font-size: 1.5rem;
-  font-weight: 800;
+.main-content {
+  flex: 1;
+  padding: 1.25rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+.star {
+  color: var(--alert-red);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   3. Distinct White Navigation Bar
+   ========================================================================== */
+.top-nav {
+  width: 100%;
+  height: 64px;
+  background-color: var(--sterile-white);
+  border-bottom: 2px solid var(--border-slate);
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 100;
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--primary-deep);
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
-.table-responsive {
-  width: 100%;
-  overflow-x: auto; /* Adds horizontal scroll ONLY when table exceeds card width */
-  -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling on iOS Safari */
+.brand:hover,
+.brand:visited,
+.brand:active {
+  text-decoration: none;
+  color: var(--primary-deep);
 }
-.clinical-btn {
-  padding: 0.65rem 1.25rem;
-  border-radius: 6px;
-  border: 1px solid transparent;
+
+.brand-teal {
+  color: var(--secondary-teal);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.sub-nav-bar {
+  background-color: #f1f5f9;
+  border-bottom: 1px solid var(--border-slate);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.nav-link {
+  color: var(--primary-deep);
   font-weight: 600;
+  text-decoration: none;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   4. Preserved Button Styles
+   ========================================================================== */
+.clinical-btn {
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
+.clinical-btn:hover {
+  text-decoration: none;
+}
 
 .btn-primary {
   background-color: var(--primary-deep);
   color: var(--sterile-white);
+  border: 1px solid transparent;
 }
 
 .btn-primary:hover {
-  background-color: #083c53;
+  background-color: #1e293b;
+  color: var(--sterile-white);
 }
 
 .btn-teal {
@@ -91,11 +184,12 @@ body {
 }
 
 .btn-teal:hover {
-  background-color: #028a7b;
+  background-color: #0369a1;
+  color: var(--sterile-white);
 }
 
 .btn-outline {
-  border-color: var(--primary-deep);
+  border: 1px solid var(--primary-deep);
   color: var(--primary-deep);
   background: transparent;
 }
@@ -104,19 +198,28 @@ body {
   background: var(--neutral-soft);
 }
 
-.main-content {
-  flex: 1;
-  padding: 2.5rem;
-  max-width: 1280px;
-  margin: 0 auto;
-  width: 100%;
+.btn-phone {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid var(--border-slate);
 }
 
-/* Card Structures */
+.nav-btn.primary {
+  background-color: var(--brand-blue);
+  color: var(--sterile-white);
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   5. Card Layouts & Grid Structures
+   ========================================================================== */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.25rem;
   margin-top: 1.5rem;
 }
 
@@ -124,160 +227,78 @@ body {
   background: var(--sterile-white);
   border: 1px solid var(--border-slate);
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-/* Password Engine Elements */
-.rule-tracker {
-  list-style: none;
-  margin-top: 0.75rem;
-  padding: 0.5rem;
-  background: var(--neutral-soft);
-  border-radius: 6px;
+/* Dedicated checkout container wrapper */
+.checkout-card {
+  max-width: 620px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-.rule-tracker li {
-  font-size: 0.825rem;
-  color: #64748B;
+.checkout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-slate);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-code-badge {
+  font-family: monospace;
+  font-size: 0.875rem;
+  background: var(--neutral-soft);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-slate);
+  color: var(--primary-deep);
+}
+
+.invoice-summary-box {
+  background: var(--neutral-soft);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid var(--border-slate);
+}
+
+.payment-method-label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-slate);
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--sterile-white);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.rule-tracker li.valid {
-  color: var(--success-green);
-  font-weight: 600;
+.payment-method-label:hover {
+  border-color: var(--secondary-teal);
+  background-color: #f0f9ff;
 }
 
-.rule-tracker li.valid::before {
-  content: "✔";
+/* ==========================================================================
+   6. Responsive Tables
+   ========================================================================== */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 1rem;
+  border: 1px solid var(--border-slate);
+  border-radius: 8px;
+  background: var(--sterile-white);
 }
 
-.rule-tracker li.invalid::before {
-  content: "○";
-}
-
-/* Data Table Architecture */
 .data-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
-  background: var(--sterile-white);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid var(--border-slate);
-  margin-top: 1rem;
 }
 
-.data-table th, .data-table td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border-slate);
-}
-
-.data-table th {
-  background: var(--neutral-soft);
-  font-weight: 700;
-}
-
-
-/* Navigation bar layout */
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  gap: 12px;
-}
-
-/* Brand Title */
-.nav-brand {
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: #0b4d6c;
-  text-decoration: none;
-  line-height: 1.2;
-  white-space: nowrap; /* Prevents text from breaking into two awkward lines */
-}
-
-/* Right-side button group */
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* Clean gap between Signup and Login */
-  flex-shrink: 0; /* Prevents buttons from squishing */
-}
-
-/* Signup Button */
-.btn-signup {
-  padding: 6px 12px;
-  border: 1.5px solid #0b4d6c;
-  border-radius: 6px;
-  background: transparent;
-  color: #0b4d6c;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-/* Login Button */
-.btn-login {
-  padding: 6px 14px;
-  border-radius: 6px;
-  background-color: #0b4d6c;
-  color: #ffffff;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-/* Container positioned fixed on screen */
-.toast-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between multiple stacked toasts */
-  pointer-events: none; /* Allows clicking behind empty space */
-}
-
-/* Base Toast Card */
-.toast {
-  pointer-events: auto; /* Re-enables clicking on the toast itself */
-  min-width: 250px;
-  max-width: 350px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  color: #ffffff;
-  font-family: sans-serif;
-  font-size: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* Visibility state */
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Color variations based on message status */
-.toast-success { background-color: #0b4d6c; } /* Ocean/Proswim blue */
-.toast-error   { background-color: #d9383a; } /* Alert red */
-.toast-info    { background-color: #00c4d6; color: #032b30; } /* Pool cyan */

@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  
 <head>
   <meta charset="UTF-8">
-  <title>LabCare Diagnostics | Internal Port Management</title>
+  <title>Proswim Academy Kenya | Terminal Management Portal</title>
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body style="background-color: #0F172A; display: flex; align-items: center; justify-content: center;">
+<body class="home-page" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1.5rem;">
 
-  <div style="width: 100%; max-width: 400px; background: #1E293B; border: 1px solid #334155; border-radius: 8px; padding: 2rem; color: #FFF;">
-    <h2 style="color: #38BDF8; margin-bottom: 0.5rem;">Clinical Systems Terminal</h2>
-    <p style="font-size: 0.8rem; color: #94A3B8; margin-bottom: 1.5rem;">Restricted portal for laboratory technicians and administrators.</p>
+  <div class="card" style="width: 100%; max-width: 420px; background: #0f172a; border: 1px solid #334155; padding: 2rem; box-shadow: 0 16px 36px rgba(0,0,0,0.4);">
+    <span class="badge" style="width: fit-content; margin-bottom: 0.75rem;">Staff Access Only</span>
+    <h2 style="color: var(--accent-mint); margin-bottom: 0.5rem; font-size: 1.5rem;">Academy Terminal Console</h2>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Restricted system access for coaches, coordinators, and administrators.</p>
 
-    <div id="internal-error" style="display: none; padding: 0.5rem; background: #7F1D1D; color: #FECACA; border-radius: 4px; font-size: 0.8rem; margin-bottom: 1rem;"></div>
+    <div id="internal-error" style="display: none; padding: 0.75rem; background: rgba(239, 68, 68, 0.15); border: 1px solid var(--alert-red); color: #fca5a5; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem;"></div>
 
     <form id="internal-auth-form">
       <div style="margin-bottom: 1rem;">
-        <label style="display: block; font-size: 0.8rem; color: #94A3B8; margin-bottom: 0.25rem;">Station Access Identifier</label>
-        <input type="text" name="username" required style="width: 100%; padding: 0.65rem; background: #0F172A; border: 1px solid #334155; color: #FFF; border-radius: 4px;">
+        <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Station Access Identifier</label>
+        <input type="text" name="username" required style="width: 100%; padding: 0.65rem; background: #071322; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;">
       </div>
       <div style="margin-bottom: 1.5rem;">
-        <label style="display: block; font-size: 0.8rem; color: #94A3B8; margin-bottom: 0.25rem;">Security Key</label>
-        <input type="password" name="password" required style="width: 100%; padding: 0.65rem; background: #0F172A; border: 1px solid #334155; color: #FFF; border-radius: 4px;">
+        <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem;">Security Key</label>
+        <input type="password" name="password" required style="width: 100%; padding: 0.65rem; background: #071322; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;">
       </div>
-      <button type="submit" class="clinical-btn btn-teal" style="width: 100%;">Authorize Console</button>
+      <button type="submit" class="clinical-btn btn-teal" style="width: 100%; padding: 0.75rem;">Authorize Console</button>
     </form>
   </div>
 

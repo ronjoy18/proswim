@@ -3,16 +3,16 @@
 {% block content %}
 <!-- Hero Section -->
 <section style="text-align: center; padding: 3rem 0; max-width: 820px; margin: 0 auto;">
-  <span style="font-size: 0.8rem; font-weight: 700; color: var(--secondary-teal); text-transform: uppercase; letter-spacing: 0.05em; background: #E6FFFA; padding: 4px 10px; border-radius: 9999px;">
+  <span class="badge" style="background: rgba(2, 132, 199, 0.12); color: var(--secondary-teal);">
     PROSWIM ACADEMY KENYA
   </span>
-  <h1 style="font-size: 2.75rem; color: var(--primary-deep); margin: 1rem 0;">Sharpen your swimming skills with competent coaching</h1>
-  <p style="font-style: italic;font-size: 1.15rem; color: #475569; line-height: 1.6;">
-    swim like a pro
+  <h1 style="font-size: 2.75rem; color: var(--primary-deep); margin: 1rem 0; line-height: 1.2;">Sharpen your swimming skills with competent coaching</h1>
+  <p style="font-style: italic; font-size: 1.15rem; color: #475569; line-height: 1.6;">
+    Swim with confidence, speed, and safety.
   </p>
-  <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
-    <a href="#activities-anchor" class="clinical-btn btn-teal">Below are our swimming services</a>
-    <a href="https://www.google.com/search?gs_ssp=eJzj4tVP1zc0LE_LKcsoz7A0YLRSNagwtDBKMzFMtEi0ME5LM0pLsTKoSDI2M0hOsjC3MLc0N02yNPcSLSjKLy7PzFVITE5MSc2tVMhOzatMBAB1Ixfc&q=proswim+academy+kenya&rlz=1C1GCEA_enRO1099KE1151&oq=proswim+&gs_lcrp=EgZjaHJvbWUqDQgCEC4YrwEYxwEYgAQyBggAEEUYOTIHCAEQABiABDINCAIQLhivARjHARiABDIHCAMQABiABDIHCAQQABiABDIGCAUQRRg9MgYIBhBFGD0yBggHEEUYPdIBCDcwMzlqMGo3qAIAsAIA&sourceid=chrome&source=chrome.ob&ie=UTF-8" target="_blank" class="clinical-btn btn-outline">More info</a>
+  <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+    <a href="#activities-anchor" class="clinical-btn btn-teal">Explore Swimming Lessons</a>
+    <a href="https://www.google.com/search?q=proswim+academy+kenya" target="_blank" class="clinical-btn btn-outline">More Info</a>
   </div>
 </section>
 
@@ -22,8 +22,8 @@
 <section id="activities-anchor">
   <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem;">
     <div>
-      <h2 style="font-size: 1.75rem; color: var(--primary-deep);">Available activities & Support</h2>
-      <p style="color: #64748B;">Select any activity to book lessons.</p>
+      <h2 style="font-size: 1.75rem; color: var(--primary-deep);">Available Activities & Coaching Modules</h2>
+      <p style="color: #64748B;">Select any lesson module to book your session.</p>
     </div>
   </div>
 
@@ -31,46 +31,47 @@
     {% for activity in activities %}
     <div class="card">
       <div>
-        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; background: #E0F2FE; color: var(--primary-deep); padding: 0.2rem 0.5rem; border-radius: 4px;">
+        <span class="badge" style="margin-bottom: 0.5rem;">
           {{ activity.category.get_category_type_display }}
         </span>
-        <h3 style="margin-top: 0.75rem; color: var(--primary-deep);">{{ activity.name }}</h3>
+        <h3 style="margin-top: 0.5rem; color: var(--primary-deep);">{{ activity.name }}</h3>
         <p style="font-size: 0.85rem; color: #64748B; margin: 0.5rem 0 1rem 0; line-height: 1.4;">
-          {{ activity.preparation_instructions|default:"Click to book swimming lessons." }}
+          {{ activity.preparation_instructions|default:"Click below to book your verified coaching session." }}
         </p>
       </div>
       <div>
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
           <span style="font-size: 1.35rem; font-weight: 800; color: var(--secondary-teal);">
-          Ksh{{ activity.price }}
+            Ksh {{ activity.price }}
           </span>
           <span style="font-size: 0.75rem; color: #64748B;">
-            ~{{ activity.duration_minutes}}minutes per lesson
+            ~{{ activity.duration_minutes }} mins per lesson
           </span>
         </div>
         <button onclick="handleActivitySelection('{{ activity.id }}', '{{ activity.name|escapejs }}', '{{ activity.price }}')" class="clinical-btn btn-primary" style="width: 100%;">
-          Book activity
+          Book Activity
         </button>
       </div>
     </div>
     {% empty %}
-    <p style="color: #64748B;">No availabe activities, please <a href="https://wa.me/+254112 964497">contact us</a>.</p>
+    <p style="color: #64748B;">No available activities at this moment. Please <a href="https://wa.me/254793294189" style="color: var(--secondary-teal); font-weight: 600;">contact us</a>.</p>
     {% endfor %}
   </div>
 </section>
+
 <!-- Clinical Auth Gate Modal Popup -->
-<div id="auth-gate-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(3px); z-index: 9999; align-items: center; justify-content: center; padding: 1.5rem;">
+<div id="auth-gate-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 1.5rem;">
   <div style="background: var(--sterile-white); border-radius: 12px; max-width: 440px; width: 100%; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); position: relative; text-align: center;">
     
     <button onclick="closeAuthGateModal()" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 1.5rem; color: #94A3B8; cursor: pointer;">&times;</button>
     
-    <div style="width: 48px; height: 48px; background: #E0F2FE; color: var(--primary-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.25rem; font-weight: bold;">
-      <img scr="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHbbn5cThDXv5LZ2LD1g2cfwyT68kOv_od3tmJoCEBQ&s=10"></img>
+    <div style="width: 52px; height: 52px; background: rgba(2, 132, 199, 0.12); color: var(--secondary-teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.5rem;">
+      🏊
     </div>
 
-    <h2 style="color: var(--primary-deep); font-size: 1.4rem; margin-bottom: 0.5rem;">Intake Authorization Required</h2>
+    <h2 style="color: var(--primary-deep); font-size: 1.35rem; margin-bottom: 0.5rem;">Client Authorization Required</h2>
     <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 1.5rem;">
-      To schedule <strong id="modal-activity-name" style="color: var(--primary-deep);"></strong> (<span id="modal-activity-price" style="color: var(--secondary-teal); font-weight: 700;"></span>), please sign in or register your client profile.
+      To schedule <strong id="modal-activity-name" style="color: var(--primary-deep);"></strong> (<span id="modal-activity-price" style="color: var(--secondary-teal); font-weight: 700;"></span>), please sign in or register your profile.
     </p>
 
     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
@@ -83,7 +84,7 @@
     </div>
 
     <p style="font-size: 0.75rem; color: #94A3B8; margin-top: 1.25rem;">
-      Coaches requesting tests for registered clients can log in via the <a href="/auth/?mode=register&role=client" style="color: var(--primary-deep); text-decoration: underline;">sign in</a>.
+      Coaches scheduling lessons on behalf of clients can log in via the <a href="/auth/?mode=login&role=coach" style="color: var(--primary-deep); text-decoration: underline;">staff portal</a>.
     </p>
   </div>
 </div>
